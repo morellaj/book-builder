@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "**/.DS_Store": false,
+        "**/.git": false,
+        "**/.hg": false,
+        "**/.svn": false,
+        "**/CVS": false
+    },
+    "jumpToAliasFile.alias": {
+        "Data": "c:\\vsc-test\\src\\data\\"
+    }
+}
