@@ -1,76 +1,59 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 // Package dependencies
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const character = {
-  beach: {
-    height: 540,
-    width: 960,
-  },
-  forest: {
-    height: 540,
-    width: 960,
-  },
-  candy: {
+  'kate-house': {
     height: 540,
     width: 960,
   },
   kate: {
-    height: 110,
-    width: 70,
+    height: 146,
+    width: 90.7,
   },
-  'kate-mad': {
-    height: 110,
-    width: 70,
+  pencil: {
+    height: 29.5,
+    width: 29.5,
   },
-  'kate-scared': {
-    height: 110,
-    width: 70,
+  book: {
+    height: 37.4,
+    width: 41,
   },
-  mia: {
-    height: 110,
-    width: 90,
+  'green-backpack': {
+    height: 46.8,
+    width: 43.2,
   },
-  'mia-confused': {
-    height: 110,
-    width: 90,
-  },
-  'mia-scared': {
-    height: 110,
-    width: 90,
-  },
-  tom: {
-    height: 110,
-    width: 70,
-  },
-  'tom-confused': {
-    height: 110,
-    width: 70,
-  },
-  'tom-hurt': {
-    height: 110,
-    width: 70,
+  table: {
+    height: 98.6,
+    width: 237.7,
   },
 };
 
 const scenes = [
   [
-    { img: 'beach', bottom: 0, left: 0 },
-    { img: 'kate', bottom: 70, left: 100 },
-    { img: 'mia', bottom: 70, left: 200 },
-    { img: 'tom', bottom: 70, left: 300 },
+    { img: 'kate-house', left: 0, bottom: 0 },
+    { img: 'kate', left: 801, bottom: 30 },
+    { img: 'table', left: 91, bottom: 33 },
+    { img: 'green-backpack', left: 130, bottom: 118 },
+    { img: 'book', left: 188, bottom: 110 },
+    { img: 'pencil', left: 253, bottom: 105 },
   ],
   [
-    { img: 'candy', bottom: 0, left: 0 },
-    { img: 'kate-mad', bottom: 70, left: 200 },
-    { img: 'mia-confused', bottom: 70, left: 300 },
-    { img: 'tom-confused', bottom: 70, left: 400 },
+    { img: 'kate-house', left: 0, bottom: 0 },
+    { img: 'kate', left: 701, bottom: 30 },
+    { img: 'table', left: 91, bottom: 33 },
+    { img: 'green-backpack', left: 130, bottom: 118 },
+    { img: 'book', left: 188, bottom: 110 },
+    { img: 'pencil', left: 253, bottom: 105 },
   ],
   [
-    { img: 'forest', bottom: 0, left: 0 },
-    { img: 'kate-scared', bottom: 70, left: 300 },
-    { img: 'mia-scared', bottom: 70, left: 400 },
-    { img: 'tom-hurt', bottom: 70, left: 500 },
+    { img: 'kate-house', left: 0, bottom: 0 },
+    { img: 'kate', left: 601, bottom: 30 },
+    { img: 'table', left: 91, bottom: 33 },
+    { img: 'green-backpack', left: 130, bottom: 118 },
+    { img: 'book', left: 188, bottom: 110 },
+    { img: 'pencil', left: 253, bottom: 105 },
   ],
 ];
 
@@ -81,6 +64,9 @@ const scenes = [
 export default function Home() {
   const [scale, setScale] = useState(1);
   const [page, setPage] = useState(0);
+  const [hover, setHover] = useState(false);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
 
   const images = scenes[page].map((item) => {
     const style = {
@@ -89,7 +75,7 @@ export default function Home() {
       bottom: scale * item.bottom,
       left: scale * item.left,
     };
-    return <Character src={`../../assets/${item.img}.png`} style={style} />;
+    return <Image src={`../../assets/${item.img}.png`} style={style} />;
   });
 
 
@@ -101,20 +87,30 @@ export default function Home() {
     }
   }
 
-  function handleClick() {
-    if (page < scenes.length - 1) {
-      setPage(page + 1);
-    } else {
-      setPage(0);
+  function handleMouseMove(e) {
+    setHover(true);
+    setX(e.clientX);
+    setY(e.clientY);
+  }
+
+  function arrowClick(e) {
+    if (e.target.getAttribute('value') === 'forward') {
+      if (page < scenes.length - 1) {
+        setPage(page + 1);
+      }
+    } else if (page >= 1) {
+      setPage(page - 1);
     }
+  }
+
+  function handleMouseOut() {
+    setHover(false);
   }
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    window.addEventListener('click', handleClick);
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('click', handleClick);
     };
   });
 
@@ -125,8 +121,15 @@ export default function Home() {
 
   return (
     <Container>
-      <BookContainer scale={scale}>
+      <BookContainer scale={scale} onMouseMove={handleMouseMove} onMouseOut={handleMouseOut}>
+        <MousePosition hover={hover}>
+          {`x: ${(x / scale).toFixed(0)}`}
+          {'   '}
+          {`y: ${(540 - (y / scale)).toFixed(0)}`}
+        </MousePosition>
         {images}
+        <SlideArrow src="../../assets/right-arrow.png" scale={scale} value="forward" onClick={arrowClick} />
+        <SlideArrow src="../../assets/left-arrow.png" scale={scale} value="back" onClick={arrowClick} />
       </BookContainer>
     </Container>
   );
@@ -145,12 +148,23 @@ const BookContainer = styled.div`
   position: relative;
 `;
 
-const Character = styled.img`
-/*
-  width: ${(props) => `${70 * props.scale}px`};
-  height: ${(props) => `${110 * props.scale}px`};
-  bottom: ${(props) => `${70 * props.scale}px`};
-  left: ${(props) => `${200 * props.scale}px`};
-  */
+const MousePosition = styled.div`
   position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5
+`;
+
+const Image = styled.img`
+  position: absolute;
+`;
+
+const SlideArrow = styled.img`
+  position: absolute;
+  z-index: 10;
+  width: ${(props) => `${80.4 * props.scale}px`};
+  height: ${(props) => `${80.4 * props.scale}px`};
+  bottom: ${(props) => `${0 * props.scale}px`};
+  left: ${(props) => (props.value === 'forward' ? `${870 * props.scale}px` : `${0 * props.scale}px`)};
+  cursor: pointer;
 `;
