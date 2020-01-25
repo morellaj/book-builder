@@ -2,60 +2,13 @@
 // Package dependencies
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { scenes } from 'Data/book1';
+import { bookDimensions } from 'Constants';
+import Item from './Item';
+import Character from './Character';
+import Speech from './Speech';
 
-const character = {
-  'kate-house': {
-    height: 540,
-    width: 960,
-  },
-  kate: {
-    height: 146,
-    width: 90.7,
-  },
-  pencil: {
-    height: 29.5,
-    width: 29.5,
-  },
-  book: {
-    height: 37.4,
-    width: 41,
-  },
-  'green-backpack': {
-    height: 46.8,
-    width: 43.2,
-  },
-  table: {
-    height: 98.6,
-    width: 237.7,
-  },
-};
-
-const scenes = [
-  [
-    { img: 'kate-house', left: 0, bottom: 0 },
-    { img: 'kate', left: 801, bottom: 30 },
-    { img: 'table', left: 91, bottom: 33 },
-    { img: 'green-backpack', left: 130, bottom: 118 },
-    { img: 'book', left: 188, bottom: 110 },
-    { img: 'pencil', left: 253, bottom: 105 },
-  ],
-  [
-    { img: 'kate-house', left: 0, bottom: 0 },
-    { img: 'kate', left: 701, bottom: 30 },
-    { img: 'table', left: 91, bottom: 33 },
-    { img: 'green-backpack', left: 130, bottom: 118 },
-    { img: 'book', left: 188, bottom: 110 },
-    { img: 'pencil', left: 253, bottom: 105 },
-  ],
-  [
-    { img: 'kate-house', left: 0, bottom: 0 },
-    { img: 'kate', left: 601, bottom: 30 },
-    { img: 'table', left: 91, bottom: 33 },
-    { img: 'green-backpack', left: 130, bottom: 118 },
-    { img: 'book', left: 188, bottom: 110 },
-    { img: 'pencil', left: 253, bottom: 105 },
-  ],
-];
+const { defaultHeight, defaultWidth } = bookDimensions;
 
 
 /** ********************************************* */
@@ -63,27 +16,29 @@ const scenes = [
 /** ********************************************* */
 export default function Home() {
   const [scale, setScale] = useState(1);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(2);
   const [hover, setHover] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
-  const images = scenes[page].map((item) => {
-    const style = {
-      height: scale * character[item.img].height,
-      width: scale * character[item.img].width,
-      bottom: scale * item.bottom,
-      left: scale * item.left,
-    };
-    return <Image src={`../../assets/${item.img}.png`} style={style} />;
+  const scene = scenes[page].map((item) => {
+    let temp;
+    if (item.character) {
+      temp = <Character scale={scale} image={item} />;
+    } else if (item.item) {
+      temp = <Item scale={scale} image={item} />;
+    } else if (item.text) {
+      temp = <Speech scale={scale} speech={item} />;
+    }
+    return temp;
   });
 
 
   function handleResize() {
-    if (window.innerWidth / window.innerHeight <= 16 / 9) {
-      setScale(window.innerWidth / 960);
+    if (window.innerWidth / window.innerHeight <= defaultWidth / defaultHeight) {
+      setScale(window.innerWidth / defaultWidth);
     } else {
-      setScale(window.innerHeight / 540);
+      setScale(window.innerHeight / defaultHeight);
     }
   }
 
@@ -127,7 +82,7 @@ export default function Home() {
           {'   '}
           {`y: ${(540 - (y / scale)).toFixed(0)}`}
         </MousePosition>
-        {images}
+        {scene}
         <SlideArrow src="../../assets/right-arrow.png" scale={scale} value="forward" onClick={arrowClick} />
         <SlideArrow src="../../assets/left-arrow.png" scale={scale} value="back" onClick={arrowClick} />
       </BookContainer>
@@ -143,8 +98,8 @@ const Container = styled.div`
 
 const BookContainer = styled.div`
   background-color: white;
-  width: ${(props) => `${960 * props.scale}px`};
-  height: ${(props) => `${540 * props.scale}px`};
+  width: ${(props) => `${defaultHeight * props.scale}px`};
+  height: ${(props) => `${defaultWidth * props.scale}px`};
   position: relative;
 `;
 
@@ -153,10 +108,6 @@ const MousePosition = styled.div`
   left: 0;
   top: 0;
   z-index: 5
-`;
-
-const Image = styled.img`
-  position: absolute;
 `;
 
 const SlideArrow = styled.img`

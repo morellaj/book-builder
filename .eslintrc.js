@@ -28,4 +28,18 @@ module.exports = {
     "strict":0,
     "react/prop-types":"off",
   },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['Colors', './src/data/colors.json'],
+          ['Data', './src/data/'],
+          ['Common', './src/components/common/'],
+          ['Icon', './src/components/common/Icon.jsx'],
+          ['Constants', './src/data/constants.js'],
+          ['Assets', './assets/'],
+        ]
+      }
+    }
+  },
 };
