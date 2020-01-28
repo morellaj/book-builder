@@ -7,6 +7,7 @@ import { defaultHeight, defaultWidth } from 'Constants';
 import Item from './Item';
 import Character from './Character';
 import Speech from './Speech';
+import Background from './Background';
 
 
 /** ********************************************* */
@@ -24,6 +25,8 @@ export default function Home() {
     let speechCount = 0;
     if (image.character) {
       temp = <Character scale={scale} image={image} />;
+    } else if (image.background) {
+      temp = <Background scale={scale} image={image} />;
     } else if (image.item) {
       temp = <Item scale={scale} image={image} />;
     } else if (image.text) {

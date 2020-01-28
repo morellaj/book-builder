@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 export const scenes = [
   [
-    { item: 'kate-house' },
+    { background: 'kate-house' },
     { item: 'table', left: 192, bottom: 66 },
     { item: 'green-backpack', left: 130, bottom: 118 },
     { item: 'book', left: 188, bottom: 110 },
@@ -18,7 +18,7 @@ export const scenes = [
     },
   ],
   [
-    { item: 'kate-house' },
+    { background: 'kate-house' },
     { item: 'table', left: 192, bottom: 66 },
     { character: 'kate', left: 600, bottom: 0 },
     { item: 'green-backpack', left: 321, bottom: 78 },
@@ -36,7 +36,7 @@ export const scenes = [
     },
   ],
   [
-    { item: 'kate-house' },
+    { item: 'background' },
     { item: 'table', left: 91, bottom: 33 },
     {
       character: 'kate-unsure', left: 338, bottom: 30, reflect: true,

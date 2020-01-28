@@ -9,11 +9,6 @@ export const characters = {
 };
 
 export const items = {
-
-  'kate-house': {
-    height: 540,
-    width: 960,
-  },
   pencil: {
     height: 29.5,
     width: 29.5,
