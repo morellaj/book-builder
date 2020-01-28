@@ -1,68 +1,140 @@
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
-// Package dependencies
+
+// Dependencies
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { characters } from 'Data/imageData';
+import {
+  standardBubbleColors,
+  defaultWidth,
+  bubbleHeight,
+  bubbleMargin,
+  bubblePaddingSizes,
+  bubbleFontSizes,
+  blockWidth,
+  blockHeight,
+  blockMargin,
+} from 'Constants';
+import SpeechTriangle from './SpeechTriangle';
 
-const colors = {
-  kate: { textColor: 'black', bgColor: 'orange' },
-  standard: { textColor: 'black', bgColor: 'gray' },
-};
-
-const sizes = {
-  standard: '16',
-};
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
 export default function Speech(props) {
-  const { scale, speech } = props;
   const {
-    text, bottom, left, character,
+    scale,
+    speech,
+    targetLeft,
+    targetBottom,
+    speechCount,
+  } = props;
+
+  const {
+    text,
+    bottom,
+    left,
+    target,
+    padding,
+    size,
+    noTriangle,
+    maxWidth,
   } = speech;
 
-  const { textColor, bgColor } = colors[character];
-  const theme = {
-    color: textColor,
-    backgroundColor: bgColor,
-  };
+  const tBottom = speech.tBottom || targetBottom;
+  const tLeft = speech.tLeft || targetLeft;
+  const { textColor, backgroundColor } = characters[target] || standardBubbleColors;
+  const theme = { textColor, backgroundColor };
+  const charWidth = characters[target].width || 0;
+
+  const bubblePadding = [];
+  if (!padding) {
+    for (let i = 0; i < text.length; i += 1) {
+      bubblePadding.push(bubblePaddingSizes.standard);
+    }
+  } else if (typeof padding === 'object') {
+    for (let i = 0; i < text.length; i += 1) {
+      const temp = bubblePaddingSizes[padding[i]] || padding[i];
+      bubblePadding.push(temp);
+    }
+  } else {
+    const temp = bubblePaddingSizes[padding] || padding;
+    for (let i = 0; i < text.length; i += 1) {
+      bubblePadding.push(temp);
+    }
+  }
+
+  const fontSize = [];
+  if (!size) {
+    for (let i = 0; i < text.length; i += 1) {
+      fontSize.push(bubbleFontSizes.standard);
+    }
+  } else if (typeof size === 'object') {
+    for (let i = 0; i < text.length; i += 1) {
+      const temp = bubbleFontSizes[size[i]] || size[i];
+      fontSize.push(temp);
+    }
+  } else {
+    const temp = bubbleFontSizes[size] || size;
+    for (let i = 0; i < text.length; i += 1) {
+      fontSize.push(temp);
+    }
+  }
+
+  const containerStyle = { bottom: scale * bottom || scale * (tBottom + bubbleHeight) };
+  if (maxWidth) {
+    containerStyle.maxWidth = scale * maxWidth;
+  }
+  if (left) {
+    containerStyle.left = scale * left;
+  } else if (tLeft > defaultWidth / 2) {
+    containerStyle.right = scale * (defaultWidth - tLeft - charWidth / 2);
+  } else {
+    containerStyle.left = scale * (tLeft - charWidth);
+  }
+
 
   const content = [];
   for (let i = 0; i < text.length; i += 1) {
     const style = {
-      fontSize: scale * 16,
-      padding: scale * 20,
-      borderRadius: scale * 10,
-      marginLeft: scale * 20 * i,
+      fontSize: scale * fontSize[i],
+      padding: scale * bubblePadding[i],
+      borderRadius: scale * (bubblePadding[i] / 2),
+      marginLeft: scale * bubbleMargin * i,
     };
-
-    content.push(<Bubble style={style}>{text[i]}</Bubble>);
-
     if (i === text.length - 1) {
-      const blockStyle = {
-        right: scale * 40,
-        borderLeftWidth: scale * 10,
-        borderRightWidth: scale * 10,
-        borderTopWidth: scale * 45,
-      };
-      content.push(<Triangle style={blockStyle} />);
+      if (noTriangle) {
+        content.push(<Bubble style={style}>{text[i]}</Bubble>);
+      } else {
+        content.push(
+          <Bubble style={style}>
+            {text[i]}
+            <SpeechTriangle
+              textLength={text.length}
+              scale={scale}
+              left={left}
+              tLeft={tLeft}
+              tBottom={tBottom}
+              charWidth={charWidth}
+              containerBottom={containerStyle.bottom}
+              bubblePadding={bubblePadding[i]}
+              speechCount={speechCount}
+            />
+          </Bubble>,
+        );
+      }
     } else {
       const blockStyle = {
-        height: scale * 10,
-        width: scale * 15,
-        marginLeft: 40 * (i + 1) * scale,
+        height: scale * blockHeight,
+        width: scale * blockWidth,
+        marginLeft: scale * blockMargin * (i + 1),
       };
+      content.push(<Bubble style={style}>{text[i]}</Bubble>);
       content.push(<Block style={blockStyle} />);
     }
   }
 
-  const bubbleStyle = {
-    bottom: scale * (bottom + 250),
-    right: scale * (960 - left - 100),
-  };
-
   return (
-    <Container style={bubbleStyle}>
+    <Container style={containerStyle}>
       <ThemeProvider theme={theme}>
         {content}
       </ThemeProvider>
@@ -77,23 +149,12 @@ const Container = styled.div`
 `;
 
 const Bubble = styled.div`
-  color: ${(props) => (props.theme.color)};
+  position: relative;
+  color: ${(props) => (props.theme.textColor)};
   background-color: ${(props) => (props.theme.backgroundColor)};
   display: inline-block;
 `;
 
 const Block = styled.div`
   background-color: ${(props) => (props.theme.backgroundColor)};
-`;
-
-const Triangle = styled.div`
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left-style: solid;
-  border-right-style: solid;
-  border-top-style: solid;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  border-top-color: ${(props) => (props.theme.backgroundColor)};
 `;

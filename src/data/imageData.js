@@ -6,10 +6,6 @@ export const characters = {
     textColor: 'black',
     backgroundColor: 'orange',
   },
-  'kate-unsure': {
-    height: 146,
-    width: 90.7,
-  },
 };
 
 export const items = {

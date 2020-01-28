@@ -20,13 +20,13 @@ export default function Character(props) {
   const style = {
     height: scale * characters[character].height,
     width: scale * characters[character].width,
-    bottom: scale * bottom,
-    left: scale * left,
+    bottom: scale * (bottom - characters[character].height / 2),
+    left: scale * (left - characters[character].width / 2),
     transform,
   };
 
   return (
-    <Container src={`Assets/${character}.png`} style={style} />
+    <Container id="character" src={`Assets/${character}.png`} style={style} />
   );
 }
 

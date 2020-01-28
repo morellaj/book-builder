@@ -3,30 +3,31 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { images } from 'Data/imageData';
+import { items } from 'Data/imageData';
 
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
-export default function Prop(props) {
+export default function Item(props) {
   const { scale, image } = props;
   const {
-    img, bottom, left, reflect,
+    item, bottom, left, reflect,
   } = image;
+
 
   const transform = reflect ? 'scaleX(-1)' : 'scaleX(1)';
 
   const style = {
-    height: scale * images[img].height,
-    width: scale * images[img].width,
-    bottom: scale * bottom,
-    left: scale * left,
+    height: scale * items[item].height,
+    width: scale * items[item].width,
+    bottom: scale * (bottom - items[item].height / 2) || 0,
+    left: scale * (left - items[item].width / 2) || 0,
     transform,
   };
 
   return (
-    <Container src={`Assets/${img}.png`} style={style} />
+    <Container src={`Assets/${item}.png`} style={style} />
   );
 }
 

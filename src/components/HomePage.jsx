@@ -3,12 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { scenes } from 'Data/book1';
-import { bookDimensions } from 'Constants';
+import { defaultHeight, defaultWidth } from 'Constants';
 import Item from './Item';
 import Character from './Character';
 import Speech from './Speech';
-
-const { defaultHeight, defaultWidth } = bookDimensions;
 
 
 /** ********************************************* */
@@ -16,19 +14,30 @@ const { defaultHeight, defaultWidth } = bookDimensions;
 /** ********************************************* */
 export default function Home() {
   const [scale, setScale] = useState(1);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [hover, setHover] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
-  const scene = scenes[page].map((item) => {
+  const scene = scenes[page].map((image) => {
     let temp;
-    if (item.character) {
-      temp = <Character scale={scale} image={item} />;
-    } else if (item.item) {
-      temp = <Item scale={scale} image={item} />;
-    } else if (item.text) {
-      temp = <Speech scale={scale} speech={item} />;
+    let speechCount = 0;
+    if (image.character) {
+      temp = <Character scale={scale} image={image} />;
+    } else if (image.item) {
+      temp = <Item scale={scale} image={image} />;
+    } else if (image.text) {
+      const target = scenes[page].find((entry) => entry.character === image.target);
+      speechCount += 1;
+      temp = (
+        <Speech
+          scale={scale}
+          speech={image}
+          targetLeft={target.left}
+          targetBottom={target.bottom}
+          speechCount={speechCount}
+        />
+      );
     }
     return temp;
   });
@@ -98,8 +107,8 @@ const Container = styled.div`
 
 const BookContainer = styled.div`
   background-color: white;
-  width: ${(props) => `${defaultHeight * props.scale}px`};
-  height: ${(props) => `${defaultWidth * props.scale}px`};
+  width: ${(props) => `${defaultWidth * props.scale}px`};
+  height: ${(props) => `${defaultHeight * props.scale}px`};
   position: relative;
 `;
 
