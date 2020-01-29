@@ -20,7 +20,7 @@ export default function SpeechTriangle(props) {
     left,
     tLeft,
     tBottom,
-    charWidth,
+    tWidth,
     containerBottom,
     bubblePadding,
     speechCount,
@@ -63,9 +63,9 @@ export default function SpeechTriangle(props) {
       ? Math.atan(opposite / adjacent) : Math.PI + Math.atan(opposite / adjacent);
     triangleStyle.transform = `rotate(${angle}rad)`;
   } else if (tLeft > defaultWidth / 2) {
-    triangleStyle.right = scale * (charWidth / 2);
+    triangleStyle.right = scale * (tWidth / 2);
   } else {
-    triangleStyle.left = scale * (charWidth - currentMargin - triangleWidth / 2);
+    triangleStyle.left = scale * (tWidth - currentMargin - triangleWidth / 2);
   }
 
   useEffect(() => {

@@ -18,13 +18,17 @@ export default function Item(props) {
 
   const transform = reflect ? 'scaleX(-1)' : 'scaleX(1)';
 
+
   const style = {
     height: scale * items[item].height,
-    width: scale * items[item].width,
     bottom: scale * (bottom - items[item].height / 2) || 0,
     left: scale * (left - items[item].width / 2) || 0,
     transform,
   };
+  if (items[item].width) {
+    style.width = scale * items[item].width;
+  }
+
 
   return (
     <Container src={`Assets/${item}.png`} style={style} />

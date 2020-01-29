@@ -6,11 +6,12 @@ export const scenes = [
     { item: 'green-backpack', left: 130, bottom: 118 },
     { item: 'book', left: 188, bottom: 110 },
     { item: 'pencil', left: 253, bottom: 105 },
-    { character: 'kate', left: 854, bottom: 93 },
     {
-      tLeft: 854,
-      tBottom: 93,
-      color: 'kate',
+      character: 'kate', left: 854, bottom: 93, reflect: true,
+    },
+    {
+      target: 'kate',
+      size: 'small',
       text:
         [
           'Yaaawwwnn...', 'Time to get ready for school.',
@@ -20,15 +21,18 @@ export const scenes = [
   [
     { background: 'kate-house' },
     { item: 'table', left: 192, bottom: 66 },
-    { character: 'kate', left: 600, bottom: 0 },
-    { item: 'green-backpack', left: 321, bottom: 78 },
     {
-      left: 500,
-      bottom: 250,
+      character: 'kate',
+      left: 356,
+      bottom: 83,
+      reflect: true,
+      items: [{
+        item: 'green-backpack', left: 70, bottom: 20, reflect: true,
+      }],
+    },
+    {
       target: 'kate',
-      size: ['huge', 'small'],
-      maxWidth: 400,
-      padding: ['huge', 'standard'],
+      size: 'small',
       text:
         [
           "Okay, let's see...", 'Got my backpack, book, pencil...',
@@ -36,20 +40,168 @@ export const scenes = [
     },
   ],
   [
-    { item: 'background' },
-    { item: 'table', left: 91, bottom: 33 },
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
     {
-      character: 'kate-unsure', left: 338, bottom: 30, reflect: true,
+      character: 'kate-unsure',
+      left: 356,
+      bottom: 83,
+      items: [{
+        item: 'green-backpack', left: 70, bottom: 20, reflect: true,
+      }],
     },
     {
-      item: 'green-backpack', left: 348, bottom: 30, reflect: true,
-    },
-    {
-      tLeft: 840,
-      tBottom: 130,
+      left: 600,
+      bottom: 400,
+      tLeft: 940,
+      tBottom: 330,
       text:
         [
           'Kate, what are you doing?',
+        ],
+    },
+  ],
+  [
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
+    {
+      character: 'kate-unsure',
+      left: 356,
+      bottom: 83,
+      items: [{
+        item: 'green-backpack', left: 70, bottom: 20, reflect: true,
+      }],
+    },
+    {
+      target: 'kate',
+      text:
+        [
+          'What do you mean, Mom?', "I'm getting ready for school!",
+        ],
+    },
+  ],
+  [
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
+    {
+      character: 'kate',
+      left: 356,
+      bottom: 83,
+      items: [{
+        item: 'green-backpack', left: 70, bottom: 20, reflect: true,
+      }],
+    },
+    {
+      left: 500,
+      bottom: 400,
+      tLeft: 940,
+      tBottom: 330,
+      text:
+        [
+          "But kate, there's no school today!",
+        ],
+    },
+  ],
+  [
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
+    {
+      item: 'green-backpack', left: 381, bottom: 33, reflect: true,
+    },
+    {
+      character: 'kateJumping-happyYelling',
+      left: 356,
+      bottom: 200,
+    },
+    {
+      target: 'kate',
+      size: 'huge',
+      left: '200',
+      bottom: '400',
+      text:
+        [
+          'NO SCHOOL?!!!!!',
+        ],
+    },
+  ],
+  [
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
+    {
+      character: 'kate',
+      left: 356,
+      bottom: 83,
+      items: [{
+        item: 'green-backpack', left: 70, bottom: 20, reflect: true,
+      }],
+    },
+    {
+      left: 600,
+      bottom: 400,
+      tLeft: 940,
+      tBottom: 330,
+      text:
+        [
+          "Yep, it's president's day.",
+        ],
+    },
+  ],
+  [
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
+    {
+      character: 'kate-happyYelling',
+      left: 356,
+      bottom: 83,
+      items: [{
+        item: 'green-backpack', left: 70, bottom: 20, reflect: true,
+      }],
+    },
+    {
+      target: 'kate',
+      size: 'large',
+      text:
+        [
+          'YES!!!',
+        ],
+    },
+  ],
+  [
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
+    {
+      item: 'green-backpack', left: 550, bottom: 150, reflect: true,
+    },
+    {
+      character: 'kateRunning',
+      left: 100,
+      bottom: 83,
+      reflect: true,
+    },
+    {
+      target: 'kate',
+      size: 'large',
+      text:
+        [
+          'Bye Mom!',
+        ],
+    },
+  ],
+  [
+    { background: 'kate-house' },
+    { item: 'table', left: 192, bottom: 66 },
+    {
+      item: 'green-backpack', left: 600, bottom: 63, reflect: true,
+    },
+
+    {
+      left: 800,
+      bottom: 400,
+      tLeft: 940,
+      tBottom: 330,
+      text:
+        [
+          'Bye Kate!',
         ],
     },
   ],

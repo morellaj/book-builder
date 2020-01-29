@@ -6,6 +6,26 @@ export const characters = {
     textColor: 'black',
     backgroundColor: 'orange',
   },
+  kateSliding: {
+    height: 114,
+    width: 128.6,
+  },
+  kateFallen: {
+    height: 79,
+    width: 147.8,
+  },
+  kateJumping: {
+    height: 142.4,
+    width: 98.6,
+  },
+  kateRunning: {
+    height: 144.6,
+    width: 102.1,
+  },
+  kateCrying: {
+    height: 139,
+    width: 102.8,
+  },
 };
 
 export const items = {

@@ -6,9 +6,9 @@ export const defaultHeight = 540;
 export const defaultWidth = 960;
 
 // Speech bubble constants
-export const standardBubbleColors = { textColor: 'black', bgColor: 'gray' };
+export const standardBubbleColors = { textColor: 'black', backgroundColor: 'gray' };
 export const bubbleFontSizes = {
-  small: 12, standard: 16, large: 20, larger: 24, huge: 28,
+  small: 14, standard: 24, large: 34, larger: 44, huge: 64,
 };
 export const bubblePaddingSizes = {
   standard: 20, large: 30, larger: 40, huge: 50,

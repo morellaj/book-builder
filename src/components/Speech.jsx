@@ -2,9 +2,7 @@
 // Dependencies
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { characters } from 'Data/imageData';
 import {
-  standardBubbleColors,
   defaultWidth,
   bubbleHeight,
   bubbleMargin,
@@ -24,8 +22,11 @@ export default function Speech(props) {
   const {
     scale,
     speech,
-    targetLeft,
-    targetBottom,
+    tLeft,
+    tBottom,
+    tWidth,
+    textColor,
+    backgroundColor,
     speechCount,
   } = props;
 
@@ -33,18 +34,13 @@ export default function Speech(props) {
     text,
     bottom,
     left,
-    target,
     padding,
     size,
     noTriangle,
     maxWidth,
   } = speech;
 
-  const tBottom = speech.tBottom || targetBottom;
-  const tLeft = speech.tLeft || targetLeft;
-  const { textColor, backgroundColor } = characters[target] || standardBubbleColors;
   const theme = { textColor, backgroundColor };
-  const charWidth = characters[target].width || 0;
 
   const bubblePadding = [];
   if (!padding) {
@@ -87,9 +83,9 @@ export default function Speech(props) {
   if (left) {
     containerStyle.left = scale * left;
   } else if (tLeft > defaultWidth / 2) {
-    containerStyle.right = scale * (defaultWidth - tLeft - charWidth / 2);
+    containerStyle.right = scale * (defaultWidth - tLeft - tWidth / 2);
   } else {
-    containerStyle.left = scale * (tLeft - charWidth);
+    containerStyle.left = scale * (tLeft - tWidth);
   }
 
 
@@ -114,7 +110,7 @@ export default function Speech(props) {
               left={left}
               tLeft={tLeft}
               tBottom={tBottom}
-              charWidth={charWidth}
+              tWidth={tWidth}
               containerBottom={containerStyle.bottom}
               bubblePadding={bubblePadding[i]}
               speechCount={speechCount}

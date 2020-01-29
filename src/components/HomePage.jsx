@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { scenes } from 'Data/book1';
-import { defaultHeight, defaultWidth } from 'Constants';
+import { defaultHeight, defaultWidth, standardBubbleColors } from 'Constants';
+import { characters } from 'Data/imageData';
 import Item from './Item';
 import Character from './Character';
 import Speech from './Speech';
@@ -15,34 +16,69 @@ import Background from './Background';
 /** ********************************************* */
 export default function Home() {
   const [scale, setScale] = useState(1);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(scenes.length - 1);
   const [hover, setHover] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
   const scene = scenes[page].map((image) => {
-    let temp;
+    let elem;
     let speechCount = 0;
     if (image.character) {
-      temp = <Character scale={scale} image={image} />;
+      elem = <Character scale={scale} image={image} key={image.character} />;
     } else if (image.background) {
-      temp = <Background scale={scale} image={image} />;
+      elem = <Background scale={scale} image={image} key={image.background} />;
     } else if (image.item) {
-      temp = <Item scale={scale} image={image} />;
+      elem = <Item scale={scale} image={image} key={image.item} />;
     } else if (image.text) {
-      const target = scenes[page].find((entry) => entry.character === image.target);
+      let tLeft;
+      let tBottom;
+      let tWidth;
+      const tar = image.target;
+      if (!tar) {
+        tLeft = image.tLeft;
+        tBottom = image.tBottom;
+        tWidth = 0;
+      } else {
+        const target = scenes[page].find((entry) => {
+          let temp;
+          if (entry.character) {
+            temp = entry.character.match(/([A-Z]?[^A-Z]*)/g)[0].split('-')[0] === tar;
+          } else { temp = false; }
+          return temp;
+        });
+        tLeft = target.left;
+        tBottom = target.bottom;
+        const pose = target.character.split('-')[0];
+        tWidth = characters[pose].width;
+      }
+
+      let textColor;
+      let backgroundColor;
+      if (!tar) {
+        textColor = standardBubbleColors.textColor;
+        backgroundColor = standardBubbleColors.backgroundColor;
+      } else {
+        textColor = characters[tar].textColor;
+        backgroundColor = characters[tar].backgroundColor;
+      }
+
       speechCount += 1;
-      temp = (
+      elem = (
         <Speech
           scale={scale}
           speech={image}
-          targetLeft={target.left}
-          targetBottom={target.bottom}
+          tLeft={tLeft}
+          tBottom={tBottom}
+          textColor={textColor}
+          backgroundColor={backgroundColor}
+          tWidth={tWidth}
           speechCount={speechCount}
+          key={speechCount}
         />
       );
     }
-    return temp;
+    return elem;
   });
 
 
