@@ -2,34 +2,53 @@
 // Package dependencies
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { scenes } from 'Data/book1';
 import { defaultHeight, defaultWidth, standardBubbleColors } from 'Constants';
 import { characters } from 'Data/imageData';
 import Item from './Item';
 import Character from './Character';
 import Speech from './Speech';
 import Background from './Background';
+import Template from './Template';
 
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
-export default function Home() {
+export default function Viewer(props) {
+  const {
+    book, page, setPage, handleNext, handleBack,
+  } = props;
   const [scale, setScale] = useState(1);
-  const [page, setPage] = useState(scenes.length - 1);
-  const [hover, setHover] = useState(false);
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-
-  const scene = scenes[page].map((image) => {
+  const scene = book.slice(1).map((image, i) => {
     let elem;
     let speechCount = 0;
     if (image.character) {
-      elem = <Character scale={scale} image={image} key={image.character} />;
+      elem = (
+        <Character
+          scale={scale}
+          image={image}
+          value={i}
+          key={image.character}
+        />
+      );
     } else if (image.background) {
-      elem = <Background scale={scale} image={image} key={image.background} />;
+      elem = (
+        <Background
+          scale={scale}
+          image={image}
+          value={i}
+          key={image.background}
+        />
+      );
     } else if (image.item) {
-      elem = <Item scale={scale} image={image} key={image.item} />;
+      elem = (
+        <Item
+          scale={scale}
+          image={image}
+          value={i}
+          key={image.item}
+        />
+      );
     } else if (image.text) {
       let tLeft;
       let tBottom;
@@ -40,7 +59,7 @@ export default function Home() {
         tBottom = image.tBottom;
         tWidth = 0;
       } else {
-        const target = scenes[page].find((entry) => {
+        const target = book.find((entry) => {
           let temp;
           if (entry.character) {
             temp = entry.character.match(/([A-Z]?[^A-Z]*)/g)[0].split('-')[0] === tar;
@@ -74,6 +93,7 @@ export default function Home() {
           backgroundColor={backgroundColor}
           tWidth={tWidth}
           speechCount={speechCount}
+          value={i}
           key={speechCount}
         />
       );
@@ -83,31 +103,12 @@ export default function Home() {
 
 
   function handleResize() {
-    if (window.innerWidth / window.innerHeight <= defaultWidth / defaultHeight) {
-      setScale(window.innerWidth / defaultWidth);
+    const { clientWidth, clientHeight } = document.getElementById('viewer').parentElement;
+    if (clientWidth / clientHeight <= defaultWidth / defaultHeight) {
+      setScale(clientWidth / defaultWidth);
     } else {
-      setScale(window.innerHeight / defaultHeight);
+      setScale(clientHeight / defaultHeight);
     }
-  }
-
-  function handleMouseMove(e) {
-    setHover(true);
-    setX(e.clientX);
-    setY(e.clientY);
-  }
-
-  function arrowClick(e) {
-    if (e.target.getAttribute('value') === 'forward') {
-      if (page < scenes.length - 1) {
-        setPage(page + 1);
-      }
-    } else if (page >= 1) {
-      setPage(page - 1);
-    }
-  }
-
-  function handleMouseOut() {
-    setHover(false);
   }
 
   useEffect(() => {
@@ -121,18 +122,21 @@ export default function Home() {
     handleResize();
   }, []);
 
+  let template = 'standard';
+  if (book[0]) {
+    template = book[0].template || 'standard';
+  }
 
   return (
-    <Container>
-      <BookContainer scale={scale} onMouseMove={handleMouseMove} onMouseOut={handleMouseOut}>
-        <MousePosition hover={hover}>
-          {`x: ${(x / scale).toFixed(0)}`}
-          {'   '}
-          {`y: ${(540 - (y / scale)).toFixed(0)}`}
-        </MousePosition>
+    <Container id="viewer">
+      <BookContainer scale={scale}>
+        <Template
+          template={template}
+          scale={scale}
+          handleNext={handleNext}
+          handleBack={handleBack}
+        />
         {scene}
-        <SlideArrow src="../../assets/right-arrow.png" scale={scale} value="forward" onClick={arrowClick} />
-        <SlideArrow src="../../assets/left-arrow.png" scale={scale} value="back" onClick={arrowClick} />
       </BookContainer>
     </Container>
   );
@@ -141,7 +145,7 @@ export default function Home() {
 
 // Styling
 const Container = styled.div`
-  
+  overflow: hidden;
 `;
 
 const BookContainer = styled.div`
@@ -149,21 +153,4 @@ const BookContainer = styled.div`
   width: ${(props) => `${defaultWidth * props.scale}px`};
   height: ${(props) => `${defaultHeight * props.scale}px`};
   position: relative;
-`;
-
-const MousePosition = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 5
-`;
-
-const SlideArrow = styled.img`
-  position: absolute;
-  z-index: 10;
-  width: ${(props) => `${80.4 * props.scale}px`};
-  height: ${(props) => `${80.4 * props.scale}px`};
-  bottom: ${(props) => `${0 * props.scale}px`};
-  left: ${(props) => (props.value === 'forward' ? `${870 * props.scale}px` : `${0 * props.scale}px`)};
-  cursor: pointer;
 `;

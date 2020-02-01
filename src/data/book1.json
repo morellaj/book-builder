@@ -1,0 +1,193 @@
+{
+  "1": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 466 },
+    { "item": "green-backpack", "left": 130, "bottom": 118 },
+    { "item": "book", "left": 188, "bottom": 110 },
+    { "item": "pencil", "left": 253, "bottom": 105 },
+    { "character": "kate", "left": 54, "bottom": 93, "reflect": true },
+    {
+      "target": "kate",
+      "size": "small",
+      "text": [
+        "Yaaawwwnn...",
+        "Time to get ready for school."
+      ]
+    }
+  ],
+  "2": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    {
+      "character": "kate",
+      "left": 356,
+      "bottom": 83,
+      "reflect": true,
+      "items": [
+        { "item": "green-backpack", "left": 70, "bottom": 20, "reflect": true }
+      ]
+    },
+    {
+      "target": "kate",
+      "size": "small",
+      "text": [
+        "Okay, let's see...",
+        "Got my backpack, book, pencil..."
+      ]
+    }
+  ],
+  "3": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    {
+      "character": "kate-unsure",
+      "left": 356,
+      "bottom": 83,
+      "items": [
+        { "item": "green-backpack", "left": 70, "bottom": 20, "reflect": true }
+      ]
+    },
+    {
+      "left": 600,
+      "bottom": 400,
+      "tLeft": 940,
+      "tBottom": 330,
+      "text": [
+        "Kate, what are you doing?"
+      ]
+    }
+  ],
+  "4": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    {
+      "character": "kate-unsure",
+      "left": 356,
+      "bottom": 83,
+      "items": [
+        { "item": "green-backpack", "left": 70, "bottom": 20, "reflect": true }
+      ]
+    },
+    {
+      "target": "kate",
+      "text": [
+        "What do you mean, Mom?",
+        "I'm getting ready for school!"
+      ]
+    }
+  ],
+  "5": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    {
+      "character": "kate",
+      "left": 356,
+      "bottom": 83,
+      "items": [
+        { "item": "green-backpack", "left": 70, "bottom": 20, "reflect": true }
+      ]
+    },
+    {
+      "left": 500,
+      "bottom": 400,
+      "tLeft": 940,
+      "tBottom": 330,
+      "text": [
+        "But kate, there's no school today!"
+      ]
+    }
+  ],
+  "6": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    { "item": "green-backpack", "left": 381, "bottom": 33, "reflect": true },
+    { "character": "kateJumping-happyYelling", "left": 356, "bottom": 200 },
+    {
+      "target": "kate",
+      "size": "huge",
+      "left": "200",
+      "bottom": "400",
+      "text": [
+        "NO SCHOOL?!!!!!"
+      ]
+    }
+  ],
+  "7": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    {
+      "character": "kate",
+      "left": 356,
+      "bottom": 83,
+      "items": [
+        { "item": "green-backpack", "left": 70, "bottom": 20, "reflect": true }
+      ]
+    },
+    {
+      "left": 600,
+      "bottom": 400,
+      "tLeft": 940,
+      "tBottom": 330,
+      "text": [
+        "Yep, it's president's day."
+      ]
+    }
+  ],
+  "8": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    {
+      "character": "kate-happyYelling",
+      "left": 356,
+      "bottom": 83,
+      "items": [
+        { "item": "green-backpack", "left": 70, "bottom": 20, "reflect": true }
+      ]
+    },
+    {
+      "target": "kate",
+      "size": "large",
+      "text": [
+        "YES!!!"
+      ]
+    }
+  ],
+  "9": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    { "item": "green-backpack", "left": 550, "bottom": 150, "reflect": true },
+    { "character": "kateRunning", "left": 100, "bottom": 83, "reflect": true },
+    {
+      "target": "kate",
+      "size": "large",
+      "text": [
+        "Bye Mom!"
+      ]
+    }
+  ],
+  "10": [
+    {"template":"standard"},
+    { "background": "kate-house" },
+    { "item": "table", "left": 192, "bottom": 66 },
+    { "item": "green-backpack", "left": 600, "bottom": 63, "reflect": true },
+    {
+      "left": 800,
+      "bottom": 400,
+      "tLeft": 940,
+      "tBottom": 330,
+      "text": [
+        "Bye Kate!"
+      ]
+    }
+  ]
+
+}

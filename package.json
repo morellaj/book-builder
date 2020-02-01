@@ -18,19 +18,27 @@
   "dependencies": {
     "copy-webpack-plugin": "5.1.1",
     "express": "^4.17.1",
+    "file-save": "^0.2.0",
+    "file-saver": "2.0.2",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "3.2.0",
     "https": "^1.0.0",
     "image-webpack-loader": "^5.1.0",
+    "immer": "^5.3.2",
+    "list-react-files": "^0.2.0",
+    "lodash": "^4.17.15",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-draggable": "^4.2.0",
     "react-full-screen": "^0.2.4",
     "react-router-dom": "^5.1.2",
+    "react-textarea-autosize": "^7.1.2",
     "react-timeout": "^1.2.0",
     "react-useinterval": "^1.0.1",
     "styled-components": "^4.4.1",
     "webpack-dev-server": "^3.10.1",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "write-json-file": "^4.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

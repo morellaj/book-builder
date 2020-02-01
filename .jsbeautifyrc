@@ -1,0 +1,5 @@
+{
+    "indent_size": 2,
+    "brace_style":"expand,preserve-inline",
+    "wrap_line-length": 1
+}

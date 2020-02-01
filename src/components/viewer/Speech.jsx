@@ -28,6 +28,7 @@ export default function Speech(props) {
     textColor,
     backgroundColor,
     speechCount,
+    value,
   } = props;
 
   const {
@@ -99,10 +100,10 @@ export default function Speech(props) {
     };
     if (i === text.length - 1) {
       if (noTriangle) {
-        content.push(<Bubble style={style}>{text[i]}</Bubble>);
+        content.push(<Bubble style={style} key={i}>{text[i]}</Bubble>);
       } else {
         content.push(
-          <Bubble style={style}>
+          <Bubble style={style} key={i}>
             {text[i]}
             <SpeechTriangle
               textLength={text.length}
@@ -124,13 +125,17 @@ export default function Speech(props) {
         width: scale * blockWidth,
         marginLeft: scale * blockMargin * (i + 1),
       };
-      content.push(<Bubble style={style}>{text[i]}</Bubble>);
-      content.push(<Block style={blockStyle} />);
+      content.push(<Bubble style={style} key={i}>{text[i]}</Bubble>);
+      content.push(<Block style={blockStyle} key={`block${i}`} />);
     }
   }
 
   return (
-    <Container style={containerStyle}>
+    <Container
+      style={containerStyle}
+      value={value}
+      data-drag
+    >
       <ThemeProvider theme={theme}>
         {content}
       </ThemeProvider>

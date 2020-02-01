@@ -11,7 +11,9 @@ import {
 // Component for displaying the home page
 /** ********************************************* */
 export default function SpeechTriangle(props) {
-  const { scale, id, style } = props;
+  const {
+    scale, id, style, handleDragStart, handleDragEnd, value,
+  } = props;
   const triangleStyle = style;
   triangleStyle.height = scale * triangleWidth;
   triangleStyle.width = scale * triangleWidth;
@@ -26,6 +28,9 @@ export default function SpeechTriangle(props) {
           borderRightWidth: scale * (triangleWidth / 2),
           borderTopWidth: scale * triangleHeight,
         }}
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        value={value}
       />
     </TriangleContainer>
   );

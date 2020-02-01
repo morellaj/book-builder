@@ -10,11 +10,12 @@ import { items } from 'Data/imageData';
 // Component for displaying the home page
 /** ********************************************* */
 export default function Item(props) {
-  const { scale, image } = props;
+  const {
+    scale, image, value,
+  } = props;
   const {
     item, bottom, left, reflect,
   } = image;
-
 
   const transform = reflect ? 'scaleX(-1)' : 'scaleX(1)';
 
@@ -31,7 +32,12 @@ export default function Item(props) {
 
 
   return (
-    <Container src={`Assets/${item}.png`} style={style} />
+    <Container
+      src={`Assets/${item}.png`}
+      style={style}
+      value={value}
+      data-drag
+    />
   );
 }
 

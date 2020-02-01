@@ -7,11 +7,12 @@ import {
 
 
 // Component dependencies
-import HomePage from './components/HomePage';
+import Viewer from './components/viewer/ViewerPage';
+import Builder from './components/builder/BuilderPage';
 
 ReactDOM.render((
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={HomePage} />
+      <Route exact path="/" component={Builder} />
     </Switch>
   </BrowserRouter>), document.getElementById('main'));

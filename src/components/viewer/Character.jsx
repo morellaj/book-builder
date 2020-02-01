@@ -10,7 +10,9 @@ import Item from './Item';
 // Component for displaying the home page
 /** ********************************************* */
 export default function Character(props) {
-  const { scale, image } = props;
+  const {
+    scale, image, value,
+  } = props;
   const {
     character, bottom, left, reflect, items,
   } = image;
@@ -33,8 +35,8 @@ export default function Character(props) {
   };
 
   return (
-    <Container id="character" style={style}>
-      <img alt="kate" src={`Assets/characters/${character}.png`} />
+    <Container id="character" style={style} value={value} data-drag>
+      <Image alt="kate" src={`Assets/characters/${character}.png`} value={value} data-drag />
       {attachments}
     </Container>
   );
@@ -44,4 +46,8 @@ export default function Character(props) {
 // Styling
 const Container = styled.div`
   position: absolute
+`;
+
+const Image = styled.img`
+  width: 100%;
 `;
