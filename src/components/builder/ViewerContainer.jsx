@@ -38,7 +38,7 @@ export default function BuilderPage(props) {
       <ViewerPageContainer>
         <ViewerPage book={book} page={page} handleNext={handleNext} handleBack={handleBack} />
       </ViewerPageContainer>
-      <ButtonList handleNext={handleNext} handleBack={handleBack} setAdd={setAdd} setPage={setPage} />
+      <ButtonList book={book} handleNext={handleNext} handleBack={handleBack} setAdd={setAdd} setPage={setPage} />
       <MousePosition>
         {`x: ${(x).toFixed(0)}`}
         {'   '}

@@ -18,7 +18,7 @@ const list = Object.keys(images);
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
-export default function CharacterSelection(props) {
+export default function ItemSelection(props) {
   const { setText, search, page } = props;
 
   function handleClick(e) {

@@ -37,13 +37,21 @@ function textReducer(state, action) {
         const obj = {};
         obj[action.category] = action.image;
         obj.left = '100';
-        obj.right = '100';
+        obj.bottom = '100';
+        if (action.page === 0) {
+          obj.start = '1';
+          obj.end = '1';
+        }
         currentState.push(obj);
         return converter(currentState);
       }
       if (action.category === 'background') {
         const obj = {};
         obj[action.category] = action.image;
+        if (action.page === 0) {
+          obj.start = '1';
+          obj.end = '1';
+        }
         currentState.push(obj);
         return converter(currentState);
       }
@@ -51,7 +59,11 @@ function textReducer(state, action) {
         const obj = {};
         obj[action.category] = action.image;
         obj.left = '100';
-        obj.right = '100';
+        obj.bottom = '100';
+        if (action.page === 0) {
+          obj.start = '1';
+          obj.end = '1';
+        }
         currentState.push(obj);
         return converter(currentState);
       }
@@ -113,7 +125,7 @@ export default function BuilderPage() {
         stuck={stuck}
         setStuck={setStuck}
       />
-      <ImageSelection add={add} setAdd={setAdd} setText={setText} stuck={stuck} />
+      <ImageSelection add={add} setAdd={setAdd} setText={setText} stuck={stuck} page={page} />
     </>
   );
 }

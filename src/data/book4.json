@@ -1,7 +1,6 @@
 {
   "0": [
-    {"background": "kate-house", "start":"1", "end":"5"},
-    {"character": "kate", "start":"1", "end":"5"}
+
   ],
   "1": [
     { "template": "firstSlide" }

@@ -72,7 +72,7 @@ export default function Viewer(props) {
         tLeft = target.left;
         tBottom = target.bottom;
         const pose = target.character.split('-')[0];
-        tWidth = characters[pose].width;
+        tWidth = characters[pose] ? characters[pose].width : 0;
       }
 
       let textColor;
@@ -104,6 +104,7 @@ export default function Viewer(props) {
     return elem;
   });
 
+  i = 0;
   const newScene = book[page].slice(1).map((image) => {
     i += 1;
     let elem;
@@ -209,7 +210,7 @@ export default function Viewer(props) {
     handleResize();
   }, []);
 
-  const { template } = book[page][0];
+  const template = book[page][0] ? book[page][0].template : 'blank';
 
   return (
     <Container id="viewer">
