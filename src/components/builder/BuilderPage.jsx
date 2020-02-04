@@ -1,11 +1,12 @@
 // Package dependencies
 import React, { useState, useEffect, useReducer } from 'react';
-import newBook from 'Data/book1.json';
+import newBook from 'Data/book4.json';
 import produce from 'immer';
 import { set, has } from 'lodash';
 import Textbox from './Textbox';
 import ViewerContainer from './ViewerContainer';
-import CharacterSelection from './CharacterSelection';
+import ImageSelection from './ImageSelection';
+import converter from './converter';
 
 function bookReducer(state, updateArg) {
   if (updateArg.constructor === Function) {
@@ -25,19 +26,35 @@ function bookReducer(state, updateArg) {
 
 function textReducer(state, action) {
   if (action.constructor === Object) {
-    const currentState = JSON.parse(state);
+    const currentState = converter(state);
     if (action.type === 'position') {
-      currentState[action.num].left += action.update.left;
-      currentState[action.num].bottom += action.update.bottom;
-      return JSON.stringify(currentState).split('},').join('},\n');
+      currentState[action.num].left = String(parseInt(currentState[action.num].left, 10) + action.update.left);
+      currentState[action.num].bottom = String(parseInt(currentState[action.num].bottom, 10) + action.update.bottom);
+      return converter(currentState);
     }
     if (action.type === 'add') {
-      const obj = {};
-      obj[action.category] = action.image;
-      obj.left = 100;
-      obj.bottom = 100;
-      currentState.push(obj);
-      return JSON.stringify(currentState).split('},').join('},\n');
+      if (action.category === 'character') {
+        const obj = {};
+        obj[action.category] = action.image;
+        obj.left = '100';
+        obj.right = '100';
+        currentState.push(obj);
+        return converter(currentState);
+      }
+      if (action.category === 'background') {
+        const obj = {};
+        obj[action.category] = action.image;
+        currentState.push(obj);
+        return converter(currentState);
+      }
+      if (action.category === 'item') {
+        const obj = {};
+        obj[action.category] = action.image;
+        obj.left = '100';
+        obj.right = '100';
+        currentState.push(obj);
+        return converter(currentState);
+      }
     }
   }
   return action;
@@ -53,16 +70,17 @@ export default function BuilderPage() {
   const [dragX, setDragX] = useState(0);
   const [dragY, setDragY] = useState(0);
   const [add, setAdd] = useState('');
+  const [stuck, setStuck] = useState(false);
 
   function handleDragStart(e) {
-    if (e.target.getAttribute('data-drag')) {
+    if (e.target.getAttribute('data-drag') === 'true') {
       setDragX(e.clientX);
       setDragY(e.clientY);
     }
   }
 
   function handleDragEnd(e) {
-    if (e.target.getAttribute('data-drag')) {
+    if (e.target.getAttribute('data-drag') === 'true') {
       const xChange = e.clientX - dragX;
       const yChange = dragY - e.clientY;
       setText({ num: e.target.getAttribute('value'), type: 'position', update: { left: xChange, bottom: yChange } });
@@ -92,8 +110,10 @@ export default function BuilderPage() {
         book={book}
         setBook={setBook}
         page={page}
+        stuck={stuck}
+        setStuck={setStuck}
       />
-      <CharacterSelection add={add} setAdd={setAdd} setText={setText} />
+      <ImageSelection add={add} setAdd={setAdd} setText={setText} stuck={stuck} />
     </>
   );
 }

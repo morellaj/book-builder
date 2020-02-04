@@ -27,6 +27,7 @@ module.exports = {
     "import/named" : "off",
     "strict":0,
     "react/prop-types":"off",
+    "max-len":"off",
   },
   settings: {
     'import/resolver': {

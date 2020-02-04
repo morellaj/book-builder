@@ -11,32 +11,35 @@ import { items } from 'Data/imageData';
 /** ********************************************* */
 export default function Item(props) {
   const {
-    scale, image, value,
+    scale, image, value, noDrag,
   } = props;
   const {
     item, bottom, left, reflect,
   } = image;
 
   const transform = reflect ? 'scaleX(-1)' : 'scaleX(1)';
+  const drag = !noDrag;
 
-
+  const it = items[item];
+  const height = it ? it.height : 0;
+  const width = it ? it.width : 0;
   const style = {
-    height: scale * items[item].height,
-    bottom: scale * (bottom - items[item].height / 2) || 0,
-    left: scale * (left - items[item].width / 2) || 0,
+    height: scale * height,
+    bottom: scale * (bottom - height / 2) || 0,
+    left: scale * (left - width / 2) || 0,
     transform,
   };
-  if (items[item].width) {
-    style.width = scale * items[item].width;
+  if (width !== 0) {
+    style.width = scale * it.width;
   }
 
 
   return (
     <Container
-      src={`Assets/${item}.png`}
+      src={`Assets/items/${item}.png`}
       style={style}
       value={value}
-      data-drag
+      data-drag={drag}
     />
   );
 }

@@ -16,10 +16,13 @@ import Template from './Template';
 /** ********************************************* */
 export default function Viewer(props) {
   const {
-    book, page, setPage, handleNext, handleBack,
+    book, page, handleNext, handleBack,
   } = props;
   const [scale, setScale] = useState(1);
-  const scene = book.slice(1).map((image, i) => {
+  let i = 0;
+  const perm = book[0].filter((item) => page === 0 || (item.start <= page && item.end >= page));
+  const permanentScene = perm.map((image) => {
+    i += 1;
     let elem;
     let speechCount = 0;
     if (image.character) {
@@ -59,7 +62,7 @@ export default function Viewer(props) {
         tBottom = image.tBottom;
         tWidth = 0;
       } else {
-        const target = book.find((entry) => {
+        const target = book[page].find((entry) => {
           let temp;
           if (entry.character) {
             temp = entry.character.match(/([A-Z]?[^A-Z]*)/g)[0].split('-')[0] === tar;
@@ -101,6 +104,90 @@ export default function Viewer(props) {
     return elem;
   });
 
+  const newScene = book[page].slice(1).map((image) => {
+    i += 1;
+    let elem;
+    let speechCount = 0;
+    if (image.character) {
+      elem = (
+        <Character
+          scale={scale}
+          image={image}
+          value={i}
+          key={image.character}
+        />
+      );
+    } else if (image.background) {
+      elem = (
+        <Background
+          scale={scale}
+          image={image}
+          value={i}
+          key={image.background}
+        />
+      );
+    } else if (image.item) {
+      elem = (
+        <Item
+          scale={scale}
+          image={image}
+          value={i}
+          key={image.item}
+        />
+      );
+    } else if (image.text) {
+      let tLeft;
+      let tBottom;
+      let tWidth;
+      const tar = image.target;
+      if (!tar) {
+        tLeft = image.tLeft;
+        tBottom = image.tBottom;
+        tWidth = 0;
+      } else {
+        const target = book[page].find((entry) => {
+          let temp;
+          if (entry.character) {
+            temp = entry.character.match(/([A-Z]?[^A-Z]*)/g)[0].split('-')[0] === tar;
+          } else { temp = false; }
+          return temp;
+        });
+        tLeft = target.left;
+        tBottom = target.bottom;
+        const pose = target.character.split('-')[0];
+        tWidth = characters[pose].width;
+      }
+
+      let textColor;
+      let backgroundColor;
+      if (!tar) {
+        textColor = standardBubbleColors.textColor;
+        backgroundColor = standardBubbleColors.backgroundColor;
+      } else {
+        textColor = characters[tar].textColor;
+        backgroundColor = characters[tar].backgroundColor;
+      }
+
+      speechCount += 1;
+      elem = (
+        <Speech
+          scale={scale}
+          speech={image}
+          tLeft={tLeft}
+          tBottom={tBottom}
+          textColor={textColor}
+          backgroundColor={backgroundColor}
+          tWidth={tWidth}
+          speechCount={speechCount}
+          value={i}
+          key={speechCount}
+        />
+      );
+    }
+    return elem;
+  });
+
+  const scene = permanentScene.concat(newScene);
 
   function handleResize() {
     const { clientWidth, clientHeight } = document.getElementById('viewer').parentElement;
@@ -122,10 +209,7 @@ export default function Viewer(props) {
     handleResize();
   }, []);
 
-  let template = 'standard';
-  if (book[0]) {
-    template = book[0].template || 'standard';
-  }
+  const { template } = book[page][0];
 
   return (
     <Container id="viewer">

@@ -1,7 +1,7 @@
 // Package dependencies
 import React from 'react';
 import styled from 'styled-components';
-import { characters } from 'Data/imageData';
+import { items } from 'Data/imageData';
 
 function importAll(r) {
   const images = {};
@@ -12,7 +12,7 @@ function importAll(r) {
   return images;
 }
 
-const images = importAll(require.context('Assets/characters/', false, /\.(png|jpe?g|svg)$/));
+const images = importAll(require.context('Assets/items/', false, /\.(png|jpe?g|svg)$/));
 const list = Object.keys(images);
 
 /** ********************************************* */
@@ -24,21 +24,20 @@ export default function CharacterSelection(props) {
   function handleClick(e) {
     const name = e.target.getAttribute('value');
     setText({
-      type: 'add', category: 'character', image: name, page,
+      type: 'add', category: 'item', image: name, page,
     });
   }
 
   const content = list.map((image) => {
     const name = image.split('.')[0];
-    const pose = name.split('-')[0];
-    const char = characters[pose];
+    const data = items[name];
     const style = {
-      height: char.height,
-      width: char.width,
+      height: data.height,
+      width: data.width,
     };
     return (
       <ImageContainer value={name} search={search} onClick={handleClick} key={name}>
-        <Image src={`Assets/characters/${image}`} style={style} value={name} />
+        <Image src={`Assets/items/${image}`} style={style} value={name} />
         <Label value={name}>{name}</Label>
       </ImageContainer>
     );

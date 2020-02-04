@@ -77,7 +77,7 @@ export default function Speech(props) {
     }
   }
 
-  const containerStyle = { bottom: scale * bottom || scale * (tBottom + bubbleHeight) };
+  const containerStyle = { bottom: scale * bottom || scale * (parseInt(tBottom, 10) + bubbleHeight) };
   if (maxWidth) {
     containerStyle.maxWidth = scale * maxWidth;
   }

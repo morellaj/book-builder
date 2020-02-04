@@ -28,6 +28,7 @@
     "list-react-files": "^0.2.0",
     "lodash": "^4.17.15",
     "react": "^16.12.0",
+    "react-diff-viewer": "^3.0.1",
     "react-dom": "^16.12.0",
     "react-draggable": "^4.2.0",
     "react-full-screen": "^0.2.4",

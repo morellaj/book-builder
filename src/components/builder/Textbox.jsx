@@ -1,15 +1,16 @@
 // Package dependencies
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
+import converter from './converter';
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
 export default function Textbox(props) {
-  const [stuck, setStuck] = useState(false);
   const {
-    text, setText, book, setBook, page,
+    text, setText, book, setBook, page, stuck, setStuck,
   } = props;
 
   function handleChange(e) {
@@ -18,7 +19,7 @@ export default function Textbox(props) {
   }
 
   function getText() {
-    setText(JSON.stringify(book[page]).split('},').join('},\n'));
+    setText(converter(book[page]));
   }
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function Textbox(props) {
   useEffect(() => {
     function parse() {
       try {
-        return JSON.parse(document.getElementById('textbox').innerHTML);
+        return converter(document.getElementById('textbox').innerHTML);
       } catch (err) {
         return false;
       }
@@ -46,17 +47,33 @@ export default function Textbox(props) {
     }
   }, [text]);
 
+  const perm = book[0].filter((item) => item.start <= page && item.end >= page);
+  const permanentContent = converter(perm);
   return (
-    <>
-      <Container value={text} onChange={handleChange} id="textbox" />
+    <Container>
+      <PermanentContainer>
+        {permanentContent}
+      </PermanentContainer>
+      <CurrentContainer value={text} onChange={handleChange} id="textbox" spellCheck="false" />
       <Error stuck={stuck}>Error</Error>
-    </>
+      <ReactDiffViewer oldValue={converter(book[page])} newValue={text} compareMethod={DiffMethod.WORDS_WITH_SPACE} />
+    </Container>
+
   );
 }
 
 
 // Styling
-const Container = styled(Textarea)`
+const Container = styled.div`
+  font: 400 13.3333px Arial;
+`;
+
+const PermanentContainer = styled.div`
+  padding: 2px;
+  white-space: pre-wrap;
+`;
+
+const CurrentContainer = styled(Textarea)`
   width: 100%;
 `;
 

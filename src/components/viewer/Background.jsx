@@ -17,7 +17,7 @@ export default function Item(props) {
   };
 
   return (
-    <Container src={`Assets/${background}.png`} style={style} />
+    <Container src={`Assets/backgrounds/${background}.png`} style={style} />
   );
 }
 

@@ -28,15 +28,17 @@ export default function BuilderPage(props) {
   }
 
   function handleBack() {
-    if (page > 1) {
+    if (page > 0) {
       setPage(page - 1);
     }
   }
 
   return (
     <ViewerContainer onMouseMove={handleMouseMove}>
-      <ViewerPage book={book[page]} handleNext={handleNext} handleBack={handleBack} />
-      <ButtonList handleNext={handleNext} handleBack={handleBack} setAdd={setAdd} />
+      <ViewerPageContainer>
+        <ViewerPage book={book} page={page} handleNext={handleNext} handleBack={handleBack} />
+      </ViewerPageContainer>
+      <ButtonList handleNext={handleNext} handleBack={handleBack} setAdd={setAdd} setPage={setPage} />
       <MousePosition>
         {`x: ${(x).toFixed(0)}`}
         {'   '}
@@ -54,6 +56,10 @@ const ViewerContainer = styled.div`
   position: relative;
   height: 540px;
   display: flex;
+`;
+
+const ViewerPageContainer = styled.div`
+  flex: 540px 0 0;
 `;
 
 const MousePosition = styled.div`

@@ -2,11 +2,11 @@
   "1": [
     {"template":"standard"},
     { "background": "kate-house" },
-    { "item": "table", "left": 192, "bottom": 466 },
-    { "item": "green-backpack", "left": 130, "bottom": 118 },
-    { "item": "book", "left": 188, "bottom": 110 },
-    { "item": "pencil", "left": 253, "bottom": 105 },
-    { "character": "kate", "left": 54, "bottom": 93, "reflect": true },
+    { "item": "table", "left": "192", "bottom": "466" },
+    { "item": "green-backpack", "left": "130", "bottom": "118" },
+    { "item": "book", "left": "188", "bottom": "110" },
+    { "item": "pencil", "left": "253", "bottom": "105" },
+    { "character": "kate", "left": "54", "bottom": "93", "reflect": "true" },
     {
       "target": "kate",
       "size": "small",
@@ -19,14 +19,14 @@
   "2": [
     {"template":"standard"},
     { "background": "kate-house" },
-    { "item": "table", "left": 192, "bottom": 66 },
+    { "item": "table", "left": "192", "bottom": "66" },
     {
       "character": "kate",
-      "left": 356,
-      "bottom": 83,
+      "left": "356",
+      "bottom": "83",
       "reflect": true,
       "items": [
-        { "item": "green-backpack", "left": 70, "bottom": 20, "reflect": true }
+        { "item": "green-backpack", "left": "70", "bottom": "20", "reflect": true }
       ]
     },
     {

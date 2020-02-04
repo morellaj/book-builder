@@ -8,16 +8,37 @@ import styled from 'styled-components';
 // Component for displaying the home page
 /** ********************************************* */
 export default function Template(props) {
-  const { template, scale, handleNext, handleBack } = props;
+  const {
+    template, scale, handleNext, handleBack,
+  } = props;
+  const leftArrow = <SlideArrow src="../../assets/right-arrow.png" scale={scale} value="forward" onClick={handleNext} />;
+  const rightArrow = <SlideArrow src="../../assets/left-arrow.png" scale={scale} value="back" onClick={handleBack} />;
   let content;
   switch (template) {
     case 'standard':
       content = (
         <>
-          <SlideArrow src="../../assets/right-arrow.png" scale={scale} value="forward" onClick={handleNext} />
-          <SlideArrow src="../../assets/left-arrow.png" scale={scale} value="back" onClick={handleBack} />
+          {leftArrow}
+          {rightArrow}
         </>
       );
+      break;
+    case 'firstSlide':
+      content = (
+        <>
+          {leftArrow}
+        </>
+      );
+      break;
+    case 'lastSlide':
+      content = (
+        <>
+          {rightArrow}
+        </>
+      );
+      break;
+    case 'blank':
+      content = null;
       break;
     default:
       content = null;
