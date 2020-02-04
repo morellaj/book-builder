@@ -25,9 +25,9 @@ export default function BuilderPage(props) {
       const s = today.getSeconds();
       const yyyy = today.getFullYear();
       const timestamp = `${mm}/${dd}/${yyyy} ${h}:${m}:${s}`;
-      saveAs(blob, `backup ${fileName} ${timestamp}.json`);
+      saveAs(blob, `${fileName} ${timestamp} backup.json`);
     } else if (e.target.getAttribute('value') === 'draft') {
-      saveAs(blob, `draft ${fileName}.json`);
+      saveAs(blob, `${fileName} draft.json`);
     } else if (e.target.getAttribute('value') === 'website') {
       saveAs(blob, `${fileName}.json`);
     }
@@ -49,6 +49,7 @@ export default function BuilderPage(props) {
 
   return (
     <Container>
+      <Button onClick={() => (setAdd('file'))}>Open file</Button>
       <FileName rows="1" cols="20" value={fileName} onChange={handleFileNameChange} />
       <Button value="draft" onClick={handleSave}>Save Draft</Button>
       <Button value="website" onClick={handleSave}>Save to Website</Button>

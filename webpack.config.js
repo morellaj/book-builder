@@ -16,6 +16,7 @@ module.exports = {
       Icon: path.join(__dirname, 'src/components/common/Icon.jsx'),
       Constants: path.join(__dirname, 'src/data/constants.js'),
       Assets: path.join(__dirname, 'assets/'),
+      Books: path.join(__dirname, 'books/'),
     },
     extensions: ['.js', '.jsx'],
   },

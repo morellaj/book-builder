@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import CharacterSelection from './CharacterSelection';
 import BackgroundSelection from './BackgroundSelection';
 import ItemSelection from './ItemSelection';
+import FileSelection from './FileSelection';
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
-export default function ImageSelection(props) {
+export default function Selection(props) {
   const {
-    add, setAdd, setText, stuck, page,
+    add, setAdd, setText, stuck, page, setBook, setPage,
   } = props;
   const [search, setSearch] = useState('');
 
@@ -28,6 +29,9 @@ export default function ImageSelection(props) {
       break;
     case 'item':
       content = <ItemSelection setText={setText} search={search} page={page} />;
+      break;
+    case 'file':
+      content = <FileSelection search={search} setBook={setBook} setPage={setPage} />;
       break;
     default:
       break;

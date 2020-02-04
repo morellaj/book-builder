@@ -5,7 +5,7 @@ import produce from 'immer';
 import { set, has } from 'lodash';
 import Textbox from './Textbox';
 import ViewerContainer from './ViewerContainer';
-import ImageSelection from './ImageSelection';
+import Selection from './Selection';
 import converter from './converter';
 
 function bookReducer(state, updateArg) {
@@ -125,7 +125,7 @@ export default function BuilderPage() {
         stuck={stuck}
         setStuck={setStuck}
       />
-      <ImageSelection add={add} setAdd={setAdd} setText={setText} stuck={stuck} page={page} />
+      <Selection add={add} setAdd={setAdd} setText={setText} stuck={stuck} page={page} setBook={setBook} setPage={setPage} />
     </>
   );
 }

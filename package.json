@@ -5,12 +5,13 @@
   "main": "server.js",
   "homepage": "book-builder",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "build:dev": "webpack --mode development",
-    "start": "npm run build && node server.js",
+    "test": "npm run build && node server.js",
     "d": "npm run webpack --mode development",
     "dev": "webpack --mode development && node server.js",
     "client": "webpack-dev-server --mode development --devtool cheap-eval-source-map",
+    "start": "webpack-dev-server --mode development --devtool cheap-eval-source-map --no-live-reload",
     "client:detailed": "webpack-dev-server --mode development --devtool inline-source-map",
     "server": "nodemon server.js",
     "start:dev": "npm run build:dev && node server.js"
