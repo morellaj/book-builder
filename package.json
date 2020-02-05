@@ -17,6 +17,7 @@
     "start:dev": "npm run build:dev && node server.js"
   },
   "dependencies": {
+    "@sentry/browser": "^5.12.1",
     "copy-webpack-plugin": "5.1.1",
     "express": "^4.17.1",
     "file-save": "^0.2.0",
@@ -32,6 +33,7 @@
     "react-diff-viewer": "^3.0.1",
     "react-dom": "^16.12.0",
     "react-draggable": "^4.2.0",
+    "react-error-boundary": "^1.2.5",
     "react-full-screen": "^0.2.4",
     "react-router-dom": "^5.1.2",
     "react-textarea-autosize": "^7.1.2",

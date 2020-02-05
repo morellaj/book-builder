@@ -24,10 +24,6 @@ export default function Textbox(props) {
 
   useEffect(() => {
     getText();
-  }, []);
-
-  useEffect(() => {
-    getText();
   }, [page]);
 
   useEffect(() => {
@@ -54,7 +50,7 @@ export default function Textbox(props) {
       <PermanentContainer>
         {permanentContent}
       </PermanentContainer>
-      <CurrentContainer value={text} onChange={handleChange} id="textbox" spellCheck="false" />
+      <CurrentContainer value={text} onChange={handleChange} spellCheck="false" />
       <Error stuck={stuck}>Error</Error>
       <ReactDiffViewer oldValue={converter(book[page])} newValue={text} compareMethod={DiffMethod.WORDS_WITH_SPACE} />
     </Container>

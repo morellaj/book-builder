@@ -1,31 +1,25 @@
 // Package dependencies
 import React from 'react';
 import styled from 'styled-components';
+import importAll from './importAll';
 
-function importAll(r) {
-  const images = {};
-  const keys = r.keys();
-  for (let i = 0; i < keys.length; i += 1) {
-    images[keys[i].replace('./', '')] = r(keys[i]);
-  }
-  return images;
-}
-
+const files = importAll(require.context('Books/', false, /\.(json)$/));
+const list = Object.keys(files);
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
 export default function FileSelection(props) {
   const {
-    search, setBook, setPage,
+    search, setBook, page, setPage,
   } = props;
-
-  const files = importAll(require.context('Books/', false, /\.(json)$/));
-  const list = Object.keys(files);
 
   function handleClick(e) {
     const name = e.target.getAttribute('value');
     setPage(1);
+    if (page === 1) {
+      setPage(0);
+    }
     setBook(files[`${name}.json`]);
   }
 

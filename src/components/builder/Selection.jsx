@@ -1,10 +1,8 @@
 // Package dependencies
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import CharacterSelection from './CharacterSelection';
-import BackgroundSelection from './BackgroundSelection';
-import ItemSelection from './ItemSelection';
 import FileSelection from './FileSelection';
+import ImageSelection from './ImageSelection';
 
 /** ********************************************* */
 // Component for displaying the home page
@@ -22,16 +20,12 @@ export default function Selection(props) {
   let content;
   switch (add) {
     case 'character':
-      content = <CharacterSelection setText={setText} search={search} page={page} />;
-      break;
     case 'background':
-      content = <BackgroundSelection setText={setText} search={search} page={page} />;
-      break;
     case 'item':
-      content = <ItemSelection setText={setText} search={search} page={page} />;
+      content = <ImageSelection setText={setText} search={search} page={page} add={add} />;
       break;
     case 'file':
-      content = <FileSelection search={search} setBook={setBook} setPage={setPage} />;
+      content = <FileSelection search={search} setBook={setBook} page={page} setPage={setPage} />;
       break;
     default:
       break;

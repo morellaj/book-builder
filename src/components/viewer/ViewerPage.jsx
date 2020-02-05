@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { defaultHeight, defaultWidth, standardBubbleColors } from 'Constants';
 import { characters } from 'Data/imageData';
+import Error from 'Error';
 import Item from './Item';
 import Character from './Character';
 import Speech from './Speech';
@@ -14,11 +15,12 @@ import Template from './Template';
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
-export default function Viewer(props) {
+export default function ViewerPage(props) {
   const {
     book, page, handleNext, handleBack,
   } = props;
   const [scale, setScale] = useState(1);
+
   let i = 0;
   const perm = book[0].filter((item) => page === 0 || (item.start <= page && item.end >= page));
   const permanentScene = perm.map((image) => {
@@ -111,12 +113,14 @@ export default function Viewer(props) {
     let speechCount = 0;
     if (image.character) {
       elem = (
-        <Character
-          scale={scale}
-          image={image}
-          value={i}
-          key={image.character}
-        />
+        <Error>
+          <Character
+            scale={scale}
+            image={image}
+            value={i}
+            key={image.character}
+          />
+        </Error>
       );
     } else if (image.background) {
       elem = (

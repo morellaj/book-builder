@@ -17,6 +17,7 @@ module.exports = {
       Constants: path.join(__dirname, 'src/data/constants.js'),
       Assets: path.join(__dirname, 'assets/'),
       Books: path.join(__dirname, 'books/'),
+      Error: path.join(__dirname, 'src/components/common/Error.jsx'),
     },
     extensions: ['.js', '.jsx'],
   },

@@ -3,6 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { characters } from 'Data/imageData';
+import { ErrorBoundary } from 'react-error-boundary';
 import Item from './Item';
 
 
@@ -19,7 +20,7 @@ export default function Character(props) {
 
   let attachments;
   if (items) {
-    attachments = items.map((x) => <Item scale={scale} image={x} key={x.item} noDrag />);
+    attachments = items.map((x, i) => <Item scale={scale} image={x} key={x.item} data-drag value={`item-${value}-${i}`} />);
   }
 
   const transform = reflect ? 'scaleX(-1)' : 'scaleX(1)';
@@ -27,7 +28,8 @@ export default function Character(props) {
 
   const pose = characters[character.split('-')[0]];
   const height = pose ? pose.height : 0;
-  const width = pose ? pose.width : 0;
+  // const width = pose ? pose.width : 0;
+  const { width } = pose || {};
 
 
   const style = {
@@ -38,11 +40,30 @@ export default function Character(props) {
     transform,
   };
 
+  const MyFallbackComponent = ({ componentStack, error }) => (
+    <div>
+      <p><strong>Oops! An error occured!</strong></p>
+      <p>Here’s what we know…</p>
+      <p>
+        <strong>Error:</strong>
+        {' '}
+        {error.toString()}
+      </p>
+      <p>
+        <strong>Stacktrace:</strong>
+        {' '}
+        {componentStack}
+      </p>
+    </div>
+  );
+
   return (
-    <Container id="character" style={style} value={value} data-drag>
-      <Image alt="kate" src={`Assets/characters/${character}.png`} value={value} data-drag />
-      {attachments}
-    </Container>
+    <ErrorBoundary FallbackComponent={MyFallbackComponent}>
+      <Container id="character" style={style} value={value} data-drag>
+        <Image alt="kate" src={`Assets/characters/${character}.png`} value={value} data-drag />
+        {attachments}
+      </Container>
+    </ErrorBoundary>
   );
 }
 

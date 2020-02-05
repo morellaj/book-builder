@@ -134,6 +134,7 @@ export default function Speech(props) {
     <Container
       style={containerStyle}
       value={value}
+      draggable="true"
       data-drag
     >
       <ThemeProvider theme={theme}>
@@ -147,6 +148,7 @@ export default function Speech(props) {
 // Styling
 const Container = styled.div`
   position: absolute;
+  user-select: none;
 `;
 
 const Bubble = styled.div`
