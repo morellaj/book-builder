@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { saveAs } from 'file-saver';
 import useInterval from 'react-useinterval';
 import styled from 'styled-components';
+import Instructions from './Instructions';
 
 /** ********************************************* */
 // Component for displaying the home page
@@ -30,14 +31,14 @@ export default function BuilderPage(props) {
     }
   }
 
-  useInterval(handleSave, 10000);
+  // useInterval(handleSave, 10000);  // online viewing
 
   return (
     <Container>
       <Button onClick={() => (setAdd('file'))}>Open file</Button>
       <FileName rows="1" cols="20" value={fileName} onChange={(e) => (setFileName(e.target.value))} />
       <Button value="draft" onClick={handleSave}>Save Draft</Button>
-      <Button value="website" onClick={handleSave}>Save to Website</Button>
+      {/* <Button value="website" onClick={handleSave}>Save to Website</Button>online viewing */}
       <Button onClick={handleBack}>Previous Page</Button>
       <Button onClick={handleNext}>Next Page</Button>
       <PageContainer value={goPage} onChange={(e) => (setGoPage(e.target.value))}>
@@ -48,6 +49,7 @@ export default function BuilderPage(props) {
       <Button onClick={() => (setAdd('background'))}>Add Background</Button>
       <Button onClick={() => (setAdd('item'))}>Add Item</Button>
       <Button onClick={() => (setAdd('layout'))}>Add Layout</Button>
+      <Instructions />
     </Container>
   );
 }

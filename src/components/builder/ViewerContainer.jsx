@@ -11,7 +11,7 @@ import RightClickMenu from './context/RightClickMenu';
 // Component for displaying the home page
 /** ********************************************* */
 export default function ViewerContainer(props) {
-  const { book, page, setPage, setAdd, fileName, setFileName, setText, menu } = props;
+  const { book, page, setPage, setAdd, fileName, setFileName, setText, menu, setMenu } = props;
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
@@ -53,7 +53,7 @@ export default function ViewerContainer(props) {
         {'   '}
         {`page: ${page}`}
       </MousePosition>
-      <RightClickMenu menu={menu} setText={setText} />
+      <RightClickMenu menu={menu} setMenu={setMenu} setText={setText} />
     </Container>
   );
 }

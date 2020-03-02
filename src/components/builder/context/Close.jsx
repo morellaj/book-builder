@@ -6,23 +6,19 @@ import styled from 'styled-components';
 // Component for displaying the home page
 /** ********************************************* */
 export default function Selection(props) {
-  const { num, setText } = props;
+  const { setMenu } = props;
 
   return (
-    <Container onDoubleClick={() => { setText({ num, type: 'delete' }); }}>
-      <Text>Delete (double click)</Text>
+    <Container onClick={() => { setMenu({}); }}>
+      X
     </Container>
   );
 }
 
 // Styling
 const Container = styled.div`
-  display: flex;
-  margin: 5px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
   color: red;
-  cursor: pointer;
-`;
-
-const Text = styled.div`
-  
 `;

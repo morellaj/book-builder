@@ -18,19 +18,24 @@ export default function Item(props) {
     transform += ` rotate(${rotate}deg)`;
   }
 
+  const { height, width } = items[item] || { height: 0, width: 0 };
+
+
   let clipStyle;
-  /*
   if (clip) {
     if (clip.length === 4) {
       clipStyle = `rect(${clip[0]}px, ${clip[1]}px, ${clip[2]}px, ${clip[3]}px, )`;
-    },
-    if (clip.length == 2) {
-      clipStyle =
+    } else if (clip.length === 2) {
+      const x = parseInt(clip[0]);
+      const y = parseInt(clip[1]);
+      const y1 = y < 0 ? -scale * y : 0;
+      const x1 = x > 0 ? scale * (width - x) : scale * width;
+      const y2 = y > 0 ? scale * (height - y) : scale * height;
+      const x2 = x < 0 ? -scale * x : 0;
+      clipStyle = `rect(${y1}px, ${x1}px, ${y2}px, ${x2}px)`;
     }
   }
-  */
 
-  const { height, width } = items[item] || { height: 0, width: 0 };
   const style = {
     height: scale * height,
     bottom: scale * (bottom - height / 2) || 0,

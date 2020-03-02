@@ -1,6 +1,6 @@
 // Package dependencies
 import React, { useState, useEffect, useReducer } from 'react';
-import newBook from 'Books/new file draft.json';
+import newBook from 'Books/example.json';
 import produce from 'immer';
 import { set, has } from 'lodash';
 import Error from 'Error';
@@ -210,6 +210,7 @@ export default function BuilderPage() {
           setFileName={setFileName}
           setText={setText}
           menu={menu}
+          setMenu={setMenu}
         />
       </Error>
       <Error>
