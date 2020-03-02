@@ -1,0 +1,53 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [{
+        "@type": "Organization",
+        "@id": "https://yoast.com/#organization",
+        "name": "Yoast",
+        "url": "https://yoast.com/",
+        "sameAs": ["https://www.facebook.com/yoast", "https://www.instagram.com/yoast/", "https://www.linkedin.com/company/1414157/", "https://www.youtube.com/yoast", "https://www.pinterest.com/yoast/", "https://en.wikipedia.org/wiki/Yoast", "https://twitter.com/yoast"],
+        "logo": {
+            "@type": "ImageObject",
+            "@id": "https://yoast.com/#logo",
+            "inLanguage": "en-US",
+            "url": "https://yoast.com/app/uploads/2019/06/Yoast-Logo-Icon-120x120.png",
+            "width": 120,
+            "height": 120,
+            "caption": "Yoast"
+        },
+        "image": {
+            "@id": "https://yoast.com/#logo"
+        },
+        "legalName": "Yoast BV"
+    }, {
+        "@type": "WebSite",
+        "@id": "https://yoast.com/#website",
+        "url": "https://yoast.com/",
+        "name": "Yoast",
+        "inLanguage": "en-US",
+        "description": "SEO for everyone",
+        "publisher": {
+            "@id": "https://yoast.com/#organization"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://yoast.com/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }, {
+        "@type": ["WebPage"],
+        "@id": "https://yoast.com/#webpage",
+        "url": "https://yoast.com/",
+        "name": "SEO for everyone &bull; Yoast",
+        "isPartOf": {
+            "@id": "https://yoast.com/#website"
+        },
+        "inLanguage": "en-US",
+        "about": {
+            "@id": "https://yoast.com/#organization"
+        },
+        "datePublished": "2015-09-14T08:13:22+00:00",
+        "dateModified": "2020-02-18T13:24:20+00:00",
+        "description": "Yoast helps you with your website optimization, whether it be through our widely used SEO software or our online SEO courses: we're here to help."
+    }]
+}

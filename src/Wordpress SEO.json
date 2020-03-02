@@ -1,0 +1,152 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [{
+        "@type": "Organization",
+        "@id": "https://yoast.com/#organization",
+        "name": "Yoast",
+        "url": "https://yoast.com/",
+        "sameAs": ["https://www.facebook.com/yoast", "https://www.instagram.com/yoast/", "https://www.linkedin.com/company/1414157/", "https://www.youtube.com/yoast", "https://www.pinterest.com/yoast/", "https://en.wikipedia.org/wiki/Yoast", "https://twitter.com/yoast"],
+        "logo": {
+            "@type": "ImageObject",
+            "@id": "https://yoast.com/#logo",
+            "inLanguage": "en-US",
+            "url": "https://yoast.com/app/uploads/2019/06/Yoast-Logo-Icon-120x120.png",
+            "width": 120,
+            "height": 120,
+            "caption": "Yoast"
+        },
+        "image": {
+            "@id": "https://yoast.com/#logo"
+        },
+        "legalName": "Yoast BV"
+    }, {
+        "@type": "WebSite",
+        "@id": "https://yoast.com/#website",
+        "url": "https://yoast.com/",
+        "name": "Yoast",
+        "inLanguage": "en-US",
+        "description": "SEO for everyone",
+        "publisher": {
+            "@id": "https://yoast.com/#organization"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://yoast.com/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }, {
+        "@type": "ImageObject",
+        "@id": "https://yoast.com/wordpress/plugins/seo/#primaryimage",
+        "inLanguage": "en-US",
+        "url": "https://yoast.com/app/uploads/2010/10/Yoast_SEO_FB-1-1.png",
+        "width": 1200,
+        "height": 628,
+        "caption": "Yoast SEO"
+    }, {
+        "@type": ["WebPage", "ItemPage"],
+        "@id": "https://yoast.com/wordpress/plugins/seo/#webpage",
+        "url": "https://yoast.com/wordpress/plugins/seo/",
+        "name": "Yoast SEO: the #1 WordPress SEO Plugin \u2022 Yoast",
+        "isPartOf": {
+            "@id": "https://yoast.com/#website"
+        },
+        "inLanguage": "en-US",
+        "primaryImageOfPage": {
+            "@id": "https://yoast.com/wordpress/plugins/seo/#primaryimage"
+        },
+        "datePublished": "2010-10-11T20:07:47+00:00",
+        "dateModified": "2020-01-13T09:17:14+00:00",
+        "description": "Yoast SEO is the most complete WordPress SEO plugin. It handles the technical optimization of your site & assists with optimizing your content.",
+        "breadcrumb": {
+            "@id": "https://yoast.com/wordpress/plugins/seo/#breadcrumb"
+        }
+    }, {
+        "@type": "BreadcrumbList",
+        "@id": "https://yoast.com/wordpress/plugins/seo/#breadcrumb",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://yoast.com/",
+                "url": "https://yoast.com/",
+                "name": "Home"
+            }
+        }, {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://yoast.com/wordpress/plugins/",
+                "url": "https://yoast.com/wordpress/plugins/",
+                "name": "WordPress plugins"
+            }
+        }, {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://yoast.com/wordpress/plugins/seo/",
+                "url": "https://yoast.com/wordpress/plugins/seo/",
+                "name": "Yoast SEO for WordPress"
+            }
+        }]
+    }, {
+        "@type": ["Product", "softwareApplication"],
+        "@id": "https://yoast.com/wordpress/plugins/seo/#product",
+        "mainEntityOfPage": {
+            "@id": "https://yoast.com/wordpress/plugins/seo/#webpage"
+        },
+        "name": "Yoast SEO for WordPress",
+        "sku": "82101",
+        "brand": {
+            "@id": "https://yoast.com/#organization"
+        },
+        "manufacturer": {
+            "@id": "https://yoast.com/#organization"
+        },
+        "description": "Yoast SEO is the most complete WordPress SEO plugin. It handles the technical optimization of your site & assists with optimizing your content.",
+        "operatingSystem": "WordPress",
+        "applicationCategory": "Plugin",
+        "offers": {
+            "@type": "AggregateOffer",
+            "@id": "https://yoast.com/wordpress/plugins/seo/#/aggregate-offer/3327",
+            "lowPrice": "0.00",
+            "highPrice": "89.00",
+            "priceCurrency": "EUR",
+            "offerCount": 4,
+            "offers": [{
+                "@type": "Offer",
+                "price": "0.00"
+            }, {
+                "@type": "Offer",
+                "price": "89.00"
+            }, {
+                "@type": "Offer",
+                "price": "89.00",
+                "priceCurrency": "USD"
+            }, {
+                "@type": "Offer",
+                "price": "89.00",
+                "priceCurrency": "GBP"
+            }]
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "worstRating": 1,
+            "bestRating": 5,
+            "ratingValue": 4.9000000000000004,
+            "ratingCount": 27073,
+            "reviewCount": 27073
+        },
+        "image": {
+            "@type": "ImageObject",
+            "@id": "https://yoast.com/wordpress/plugins/seo/#product_image",
+            "inLanguage": "en-US",
+            "url": "https://yoast.com/app/uploads/2017/04/Yoast_SEO_icon_nw.png",
+            "width": 500,
+            "height": 500,
+            "caption": "Yoast SEO icon"
+        }
+    }]
+}

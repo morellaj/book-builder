@@ -3,19 +3,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import FileSelection from './FileSelection';
 import ImageSelection from './ImageSelection';
+import LayoutSelection from './LayoutSelection';
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
 export default function Selection(props) {
-  const {
-    add, setAdd, setText, stuck, page, setBook, setPage,
-  } = props;
   const [search, setSearch] = useState('');
-
-  function handleChange(e) {
-    setSearch(e.target.value);
-  }
+  const { add, setAdd, setText, stuck, page, setBook, setPage, setFileName } = props;
 
   let content;
   switch (add) {
@@ -25,7 +20,10 @@ export default function Selection(props) {
       content = <ImageSelection setText={setText} search={search} page={page} add={add} />;
       break;
     case 'file':
-      content = <FileSelection search={search} setBook={setBook} page={page} setPage={setPage} />;
+      content = <FileSelection search={search} setBook={setBook} page={page} setPage={setPage} setFileName={setFileName} />;
+      break;
+    case 'layout':
+      content = <LayoutSelection setText={setText} search={search} page={page} />;
       break;
     default:
       break;
@@ -35,7 +33,7 @@ export default function Selection(props) {
     <Container add={add} stuck={stuck}>
       <UpperContainer>
         <div>Search:</div>
-        <SearchBar value={search} onChange={handleChange} />
+        <SearchBar value={search} onChange={(e) => (setSearch(e.target.value))} />
         <Exit onClick={() => (setAdd(''))}>EXIT</Exit>
       </UpperContainer>
       {content}

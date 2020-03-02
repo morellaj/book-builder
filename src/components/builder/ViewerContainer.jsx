@@ -5,14 +5,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ViewerPage from '../viewer/ViewerPage';
 import ButtonList from './ButtonList';
+import RightClickMenu from './context/RightClickMenu';
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
-export default function BuilderPage(props) {
-  const {
-    book, page, setPage, setAdd,
-  } = props;
+export default function ViewerContainer(props) {
+  const { book, page, setPage, setAdd, fileName, setFileName, setText, menu } = props;
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
@@ -34,11 +33,19 @@ export default function BuilderPage(props) {
   }
 
   return (
-    <ViewerContainer onMouseMove={handleMouseMove}>
+    <Container onMouseMove={handleMouseMove}>
       <ViewerPageContainer>
         <ViewerPage book={book} page={page} handleNext={handleNext} handleBack={handleBack} />
       </ViewerPageContainer>
-      <ButtonList book={book} handleNext={handleNext} handleBack={handleBack} setAdd={setAdd} setPage={setPage} />
+      <ButtonList
+        book={book}
+        handleNext={handleNext}
+        handleBack={handleBack}
+        setAdd={setAdd}
+        setPage={setPage}
+        fileName={fileName}
+        setFileName={setFileName}
+      />
       <MousePosition>
         {`x: ${(x).toFixed(0)}`}
         {'   '}
@@ -46,13 +53,14 @@ export default function BuilderPage(props) {
         {'   '}
         {`page: ${page}`}
       </MousePosition>
-    </ViewerContainer>
+      <RightClickMenu menu={menu} setText={setText} />
+    </Container>
   );
 }
 
 
 // Styling
-const ViewerContainer = styled.div`
+const Container = styled.div`
   position: relative;
   height: 540px;
   display: flex;

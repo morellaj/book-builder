@@ -1,12 +1,12 @@
 // Package dependencies
 import React, { useState, useEffect, useReducer } from 'react';
-import newBook from 'Data/book4.json';
+import newBook from 'Books/new file draft.json';
 import produce from 'immer';
 import { set, has } from 'lodash';
 import Error from 'Error';
 import Textbox from './Textbox';
 import ViewerContainer from './ViewerContainer';
-import Selection from './Selection';
+import Selection from './selection/Selection';
 import converter from './converter';
 
 function bookReducer(state, updateArg) {
@@ -34,9 +34,8 @@ function textReducer(state, action) {
           leftShift, bottomShift, leftStart, bottomStart,
         },
       } = action;
-
-      if (parseInt(num)) {
-        let { left, bottom } = currentState[action.num] || { left: 0, bottom: 0 };
+      if (parseInt(num) && currentState[num]) {
+        let { left, bottom } = currentState[num] || { left: 0, bottom: 0 };
         left = left || leftStart;
         bottom = bottom || bottomStart;
         currentState[num].left = String(parseInt(left) + leftShift);
@@ -45,16 +44,82 @@ function textReducer(state, action) {
       }
       const parts = num.split('-');
       const parent = currentState[parts[1]];
-      const item = parent.items[parts[2]] || { left: 0, bottom: 0 };
-      const { reflect } = parent;
-      let { left, bottom } = item || { left: 0, bottom: 0 };
-      left = left || leftStart;
-      bottom = bottom || bottomStart;
-      item.left = reflect ? String(parseInt(left) - leftShift) : String(parseInt(left) + leftShift);
-      item.bottom = String(parseInt(bottom) + bottomShift);
-      return converter(currentState);
-    }
-    if (action.type === 'add') {
+      const item = parent.items[parts[2]];
+      if (parent && item) {
+        const { reflect } = parent;
+        let { left, bottom } = item || { left: 0, bottom: 0 };
+        left = left || leftStart;
+        bottom = bottom || bottomStart;
+        item.left = reflect ? String(parseInt(left) - leftShift) : String(parseInt(left) + leftShift);
+        item.bottom = String(parseInt(bottom) + bottomShift);
+        return converter(currentState);
+      }
+    } else if (action.type === 'reflect') {
+      const { num } = action;
+      const image = currentState[num];
+      if (parseInt(num) && image) {
+        if (image.reflect) {
+          delete image.reflect;
+          return converter(currentState);
+        }
+        image.reflect = 'true';
+        return converter(currentState);
+      }
+      const parts = num.split('-');
+      const parent = currentState[parts[1]];
+      const item = parent.items[parts[2]];
+      if (parent && item) {
+        if (item.reflect) {
+          delete item.reflect;
+          return converter(currentState);
+        }
+        item.reflect = 'true';
+        return converter(currentState);
+      }
+    } else if (action.type === 'rotate') {
+      const { num, value } = action;
+      const image = currentState[num];
+      if (parseInt(num) && image) {
+        image.rotate = value;
+        return converter(currentState);
+      }
+      const parts = num.split('-');
+      const parent = currentState[parts[1]];
+      const item = parent.items[parts[2]];
+      if (parent && item) {
+        item.rotate = value;
+        return converter(currentState);
+      }
+    } else if (action.type === 'clip') {
+      const { num, xValue, yValue } = action;
+      const image = currentState[num];
+      if (parseInt(num) && image) {
+        image.clip = [xValue, yValue];
+        return converter(currentState);
+      }
+      const parts = num.split('-');
+      const parent = currentState[parts[1]];
+      const item = parent.items[parts[2]];
+      if (parent && item) {
+        image.clip = [xValue, yValue];
+        return converter(currentState);
+      }
+    } else if (action.type === 'delete') {
+      const { num } = action;
+      const image = currentState[num];
+      if (parseInt(num) && image) {
+        currentState.splice(num, 1);
+        return converter(currentState);
+      }
+      const parts = num.split('-');
+      const parent = currentState[parts[1]];
+      const item = parent.items[parts[2]];
+      if (parent && item) {
+        delete currentState[parts[1]].items.splice(parts[2]);
+        return converter(currentState);
+      }
+      /*
+    } else if (action.type === 'add') {
       const obj = {};
       obj[action.category] = action.image;
       if (action.category !== 'background') {
@@ -66,6 +131,11 @@ function textReducer(state, action) {
         obj.end = '1';
       }
       currentState.push(obj);
+      return converter(currentState);
+    }
+    */
+    } else if (action.type === 'add') {
+      currentState.push(action.update);
       return converter(currentState);
     }
   }
@@ -83,6 +153,8 @@ export default function BuilderPage() {
   const [dragY, setDragY] = useState(0);
   const [add, setAdd] = useState('');
   const [stuck, setStuck] = useState(false);
+  const [fileName, setFileName] = useState('new file');
+  const [menu, setMenu] = useState('');
 
   function handleDragStart(e) {
     if (e.target.getAttribute('data-drag') === 'true') {
@@ -92,7 +164,7 @@ export default function BuilderPage() {
   }
 
   function handleDragEnd(e) {
-    if (e.target.getAttribute('data-drag') === 'true') {
+    if (e.target.getAttribute('data-drag') === 'true' && !stuck) {
       const xChange = e.clientX - dragX;
       const yChange = dragY - e.clientY;
       setText({
@@ -108,12 +180,21 @@ export default function BuilderPage() {
     }
   }
 
+  function handleContext(e) {
+    e.preventDefault();
+    const num = e.target.getAttribute('value');
+    const image = book[page][num];
+    setMenu({ num, image, x: `${e.clientX + 100}px`, y: `${e.clientY - 100}px` });
+  }
+
   useEffect(() => {
     window.addEventListener('dragstart', handleDragStart);
     window.addEventListener('dragend', handleDragEnd);
+    window.addEventListener('contextmenu', handleContext);
     return () => {
       window.removeEventListener('dragstart', handleDragStart);
       window.removeEventListener('dragend', handleDragEnd);
+      window.removeEventListener('contextmenu', handleContext);
     };
   });
 
@@ -125,6 +206,10 @@ export default function BuilderPage() {
           page={page}
           setPage={setPage}
           setAdd={setAdd}
+          fileName={fileName}
+          setFileName={setFileName}
+          setText={setText}
+          menu={menu}
         />
       </Error>
       <Error>
@@ -139,7 +224,16 @@ export default function BuilderPage() {
         />
       </Error>
       <Error>
-        <Selection add={add} setAdd={setAdd} setText={setText} stuck={stuck} page={page} setBook={setBook} setPage={setPage} />
+        <Selection
+          add={add}
+          setAdd={setAdd}
+          setText={setText}
+          stuck={stuck}
+          page={page}
+          setBook={setBook}
+          setPage={setPage}
+          setFileName={setFileName}
+        />
       </Error>
     </>
   );

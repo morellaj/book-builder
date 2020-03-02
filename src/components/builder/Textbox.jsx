@@ -9,9 +9,7 @@ import converter from './converter';
 // Component for displaying the home page
 /** ********************************************* */
 export default function Textbox(props) {
-  const {
-    text, setText, book, setBook, page, stuck, setStuck,
-  } = props;
+  const { text, setText, book, setBook, page, stuck, setStuck } = props;
 
   function handleChange(e) {
     setStuck(true);
@@ -50,7 +48,7 @@ export default function Textbox(props) {
       <PermanentContainer>
         {permanentContent}
       </PermanentContainer>
-      <CurrentContainer value={text} onChange={handleChange} spellCheck="false" />
+      <CurrentContainer value={text} onChange={handleChange} id="textbox" spellCheck="false" />
       <Error stuck={stuck}>Error</Error>
       <ReactDiffViewer oldValue={converter(book[page])} newValue={text} compareMethod={DiffMethod.WORDS_WITH_SPACE} />
     </Container>

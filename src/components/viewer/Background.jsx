@@ -9,15 +9,19 @@ import { defaultHeight, defaultWidth } from 'Constants';
 // Component for displaying the home page
 /** ********************************************* */
 export default function Item(props) {
-  const { scale, image: { background } } = props;
+  const { details: { scale, image: { background, reflect } } } = props;
+
+  const transform = reflect ? 'scaleX(-1)' : 'scaleX(1)';
 
   const style = {
     height: scale * defaultHeight,
     width: scale * defaultWidth,
+    transform,
   };
 
+  const src = background || 'none';
   return (
-    <Container src={`Assets/backgrounds/${background}.png`} style={style} />
+    <Container src={`Assets/backgrounds/${src}.png`} style={style} />
   );
 }
 

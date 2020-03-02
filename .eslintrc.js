@@ -28,7 +28,8 @@ module.exports = {
     "strict":0,
     "react/prop-types":"off",
     "max-len":"off",
-    "radix":"off"
+    "radix":"off",
+    "object-curly-newline":"off"
   },
   settings: {
     'import/resolver': {
@@ -40,6 +41,7 @@ module.exports = {
           ['Icon', './src/components/common/Icon.jsx'],
           ['Constants', './src/data/constants.js'],
           ['Assets', './assets/'],
+          ['Books', './books/'],
           ['Error', './src/components/common/Error.jsx'],
         ]
       }

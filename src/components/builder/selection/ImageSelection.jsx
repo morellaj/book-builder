@@ -2,8 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { characters, items } from 'Data/imageData';
-import Error from 'Error';
-import importAll from './importAll';
+import importAll from '../importAll';
 
 const characterList = importAll(require.context('Assets/characters/', false, /\.(png|jpe?g|svg)$/));
 const backgroundList = importAll(require.context('Assets/backgrounds/', false, /\.(png|jpe?g|svg)$/));
@@ -13,14 +12,20 @@ const itemList = importAll(require.context('Assets/items/', false, /\.(png|jpe?g
 // Component for displaying the home page
 /** ********************************************* */
 export default function ImageSelection(props) {
-  const {
-    setText, search, page, add,
-  } = props;
+  const { setText, search, page, add } = props;
 
   function handleClick(e) {
     const name = e.target.getAttribute('value');
+    const obj = {};
+    obj[add] = name;
+    obj.left = 100;
+    obj.bottom = 100;
+    if (page === 0) {
+      obj.start = '1';
+      obj.end = '1';
+    }
     setText({
-      type: 'add', category: add, image: name, page,
+      type: 'add', update: obj,
     });
   }
 
@@ -42,12 +47,12 @@ export default function ImageSelection(props) {
         style = { height: '162px', width: '288px' };
         break;
       case 'character': {
-        const { height, width } = characters[name.split('-')[0]];
+        const { height, width } = characters[name.split('-')[0]] || { height: 0, width: 0 };
         style = { height, width };
       }
         break;
       case 'item': {
-        const { height, width } = items[name];
+        const { height, width } = items[name] || { height: 0, width: 0 };
         style = { height, width };
         break;
       }

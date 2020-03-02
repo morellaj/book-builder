@@ -21,7 +21,6 @@ import SpeechTriangle from './SpeechTriangle';
 export default function Speech(props) {
   const {
     scale,
-    speech,
     tLeft,
     tBottom,
     tWidth,
@@ -29,17 +28,16 @@ export default function Speech(props) {
     backgroundColor,
     speechCount,
     value,
+    speech: {
+      text,
+      bottom,
+      left,
+      padding,
+      size,
+      noTriangle,
+      maxWidth,
+    },
   } = props;
-
-  const {
-    text,
-    bottom,
-    left,
-    padding,
-    size,
-    noTriangle,
-    maxWidth,
-  } = speech;
 
   const theme = { textColor, backgroundColor };
 
@@ -77,7 +75,7 @@ export default function Speech(props) {
     }
   }
 
-  const containerStyle = { bottom: scale * bottom || scale * (parseInt(tBottom, 10) + bubbleHeight) };
+  const containerStyle = { bottom: scale * bottom || scale * (parseInt(tBottom) + bubbleHeight) };
   if (maxWidth) {
     containerStyle.maxWidth = scale * maxWidth;
   }

@@ -1,33 +1,36 @@
 // Package dependencies
 import React from 'react';
 import styled from 'styled-components';
-import importAll from './importAll';
 
-const files = importAll(require.context('Books/', false, /\.(json)$/));
-const list = Object.keys(files);
+const layoutList = {
+  titleSlide: [
+    { template: 'firstSlide' },
+    { background: 'title' },
+    { line: 'title', size: 'huge', left: 258, bottom: 424, width: 517 },
+  ],
+};
+
+const list = Object.keys(layoutList);
 
 /** ********************************************* */
 // Component for displaying the home page
 /** ********************************************* */
-export default function FileSelection(props) {
-  const {
-    search, setBook, page, setPage,
-  } = props;
+export default function LayoutSelection(props) {
+  const { setText, search, page } = props;
 
   function handleClick(e) {
     const name = e.target.getAttribute('value');
-    setPage(1);
-    if (page === 1) {
-      setPage(0);
+    if (page !== 0) {
+      const layout = layoutList[name];
+      for (let i = 0; i < layout.length; i += 1) {
+        const obj = layout[i];
+        setText({ type: 'add', update: obj });
+      }
     }
-    setBook(files[`${name}.json`]);
   }
 
-  const content = list.map((file) => {
-    const name = file.split('.')[0];
-    return <File value={name} onClick={handleClick} search={search} key={name}>{name}</File>;
-  });
 
+  const content = list.map((item) => <Layout value={item} onClick={handleClick} search={search} key={item}>{item}</Layout>);
 
   return (
     <Container>
@@ -42,7 +45,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const File = styled.div`
+const Layout = styled.div`
   border: 1px solid gray;
   padding: 5px;
   font-size: 12px;

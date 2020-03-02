@@ -13,7 +13,6 @@ import Triangle from './Triangle';
 /** ********************************************* */
 export default function SpeechTriangle(props) {
   const [currentBubbleWidth, setCurrentBubbleWidth] = useState(0);
-
   const {
     textLength,
     scale,
@@ -42,10 +41,10 @@ export default function SpeechTriangle(props) {
     const rightDistance = scale * (tLeft - left - currentBubbleWidth);
     // Vertical distance from the bottom of the bottom bubble to the character center
     const adjacent = containerBottom - scale * tBottom;
-    if (leftDistance < 0 && (leftDistance / adjacent < -1 || adjacent < 0)) {
+    if (leftDistance < 0 && (leftDistance / adjacent <= -1 || adjacent <= 0)) {
       triangleStyle.left = -scale * (triangleWidth / 4);
       triangleStyle.bottom = '25%';
-    } else if (rightDistance > 0 && (rightDistance / adjacent > 1 || adjacent < 0)) {
+    } else if (rightDistance > 0 && (rightDistance / adjacent >= 1 || adjacent <= 0)) {
       triangleStyle.left = currentBubbleWidth - scale * (triangleWidth * (3 / 4));
       triangleStyle.bottom = '25%';
     // If triangle would be too far to the left, set the position to the farthest left

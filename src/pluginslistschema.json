@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [{
+        "@type": "Organization",
+        "@id": "https://yoast.com/#organization",
+        "name": "Yoast",
+        "url": "https://yoast.com/",
+        "sameAs": ["https://www.facebook.com/yoast", "https://www.instagram.com/yoast/", "https://www.linkedin.com/company/1414157/", "https://www.youtube.com/yoast", "https://www.pinterest.com/yoast/", "https://en.wikipedia.org/wiki/Yoast", "https://twitter.com/yoast"],
+        "logo": {
+            "@type": "ImageObject",
+            "@id": "https://yoast.com/#logo",
+            "inLanguage": "en-US",
+            "url": "https://yoast.com/app/uploads/2019/06/Yoast-Logo-Icon-120x120.png",
+            "width": 120,
+            "height": 120,
+            "caption": "Yoast"
+        },
+        "image": {
+            "@id": "https://yoast.com/#logo"
+        },
+        "legalName": "Yoast BV"
+    }, {
+        "@type": "WebSite",
+        "@id": "https://yoast.com/#website",
+        "url": "https://yoast.com/",
+        "name": "Yoast",
+        "inLanguage": "en-US",
+        "description": "SEO for everyone",
+        "publisher": {
+            "@id": "https://yoast.com/#organization"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://yoast.com/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }, {
+        "@type": ["CollectionPage"],
+        "@id": "https://yoast.com/wordpress/plugins/#webpage",
+        "url": "https://yoast.com/wordpress/plugins/",
+        "name": "WordPress plugins by Yoast",
+        "isPartOf": {
+            "@id": "https://yoast.com/#website"
+        },
+        "inLanguage": "en-US",
+        "description": "At Yoast we take pride in making some of the most popular WordPress plugins available today, you'll find both free and premium plugins here.",
+        "breadcrumb": {
+            "@id": "https://yoast.com/wordpress/plugins/#breadcrumb"
+        }
+    }, {
+        "@type": "BreadcrumbList",
+        "@id": "https://yoast.com/wordpress/plugins/#breadcrumb",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://yoast.com/",
+                "url": "https://yoast.com/",
+                "name": "Home"
+            }
+        }, {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://yoast.com/wordpress/plugins/",
+                "url": "https://yoast.com/wordpress/plugins/",
+                "name": "WordPress plugins"
+            }
+        }]
+    }]
+}

@@ -9,10 +9,7 @@ import styled from 'styled-components';
 /** ********************************************* */
 export default function BuilderPage(props) {
   const [goPage, setGoPage] = useState('');
-  const [fileName, setFileName] = useState('new file');
-  const {
-    handleNext, handleBack, book, setAdd, setPage,
-  } = props;
+  const { handleNext, handleBack, book, setAdd, setPage, fileName, setFileName } = props;
 
   function handleSave(e) {
     const blob = new Blob([JSON.stringify(book)], { type: 'application/json' });
@@ -25,24 +22,12 @@ export default function BuilderPage(props) {
       const s = today.getSeconds();
       const yyyy = today.getFullYear();
       const timestamp = `${mm}/${dd}/${yyyy} ${h}:${m}:${s}`;
-      saveAs(blob, `${fileName} ${timestamp} backup.json`);
+      saveAs(blob, `${fileName} ${timestamp}_backup.json`);
     } else if (e.target.getAttribute('value') === 'draft') {
-      saveAs(blob, `${fileName} draft.json`);
+      saveAs(blob, `${fileName}_draft.json`);
     } else if (e.target.getAttribute('value') === 'website') {
       saveAs(blob, `${fileName}.json`);
     }
-  }
-
-  function handleGoPageChange(e) {
-    setGoPage(e.target.value);
-  }
-
-  function handleFileNameChange(e) {
-    setFileName(e.target.value);
-  }
-
-  function handleGoPageClick() {
-    setPage(parseInt(goPage, 10));
   }
 
   useInterval(handleSave, 10000);
@@ -50,18 +35,19 @@ export default function BuilderPage(props) {
   return (
     <Container>
       <Button onClick={() => (setAdd('file'))}>Open file</Button>
-      <FileName rows="1" cols="20" value={fileName} onChange={handleFileNameChange} />
+      <FileName rows="1" cols="20" value={fileName} onChange={(e) => (setFileName(e.target.value))} />
       <Button value="draft" onClick={handleSave}>Save Draft</Button>
       <Button value="website" onClick={handleSave}>Save to Website</Button>
       <Button onClick={handleBack}>Previous Page</Button>
       <Button onClick={handleNext}>Next Page</Button>
+      <PageContainer value={goPage} onChange={(e) => (setGoPage(e.target.value))}>
+        <PageEntry rows="1" cols="3" />
+        <Go onClick={() => (setPage(parseInt(goPage)))}>Go</Go>
+      </PageContainer>
       <Button onClick={() => (setAdd('character'))}>Add Character</Button>
       <Button onClick={() => (setAdd('background'))}>Add Background</Button>
       <Button onClick={() => (setAdd('item'))}>Add Item</Button>
-      <PageContainer value={goPage} onChange={handleGoPageChange}>
-        <PageEntry rows="1" cols="3" />
-        <Go onClick={handleGoPageClick}>Go</Go>
-      </PageContainer>
+      <Button onClick={() => (setAdd('layout'))}>Add Layout</Button>
     </Container>
   );
 }

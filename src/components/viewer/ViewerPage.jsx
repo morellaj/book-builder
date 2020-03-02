@@ -2,13 +2,8 @@
 // Package dependencies
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { defaultHeight, defaultWidth, standardBubbleColors } from 'Constants';
-import { characters } from 'Data/imageData';
-import Error from 'Error';
-import Item from './Item';
-import Character from './Character';
-import Speech from './Speech';
-import Background from './Background';
+import { defaultHeight, defaultWidth } from 'Constants';
+import Scene from './Scene';
 import Template from './Template';
 
 
@@ -21,178 +16,10 @@ export default function ViewerPage(props) {
   } = props;
   const [scale, setScale] = useState(1);
 
-  let i = 0;
-  const perm = book[0].filter((item) => page === 0 || (item.start <= page && item.end >= page));
-  const permanentScene = perm.map((image) => {
-    i += 1;
-    let elem;
-    let speechCount = 0;
-    if (image.character) {
-      elem = (
-        <Character
-          scale={scale}
-          image={image}
-          value={i}
-          key={image.character}
-        />
-      );
-    } else if (image.background) {
-      elem = (
-        <Background
-          scale={scale}
-          image={image}
-          value={i}
-          key={image.background}
-        />
-      );
-    } else if (image.item) {
-      elem = (
-        <Item
-          scale={scale}
-          image={image}
-          value={i}
-          key={image.item}
-        />
-      );
-    } else if (image.text) {
-      let tLeft;
-      let tBottom;
-      let tWidth;
-      const tar = image.target;
-      if (!tar) {
-        tLeft = image.tLeft;
-        tBottom = image.tBottom;
-        tWidth = 0;
-      } else {
-        const target = book[page].find((entry) => {
-          let temp;
-          if (entry.character) {
-            temp = entry.character.match(/([A-Z]?[^A-Z]*)/g)[0].split('-')[0] === tar;
-          } else { temp = false; }
-          return temp;
-        });
-        tLeft = target.left;
-        tBottom = target.bottom;
-        const pose = target.character.split('-')[0];
-        tWidth = characters[pose] ? characters[pose].width : 0;
-      }
-
-      let textColor;
-      let backgroundColor;
-      if (!tar) {
-        textColor = standardBubbleColors.textColor;
-        backgroundColor = standardBubbleColors.backgroundColor;
-      } else {
-        textColor = characters[tar].textColor;
-        backgroundColor = characters[tar].backgroundColor;
-      }
-
-      speechCount += 1;
-      elem = (
-        <Speech
-          scale={scale}
-          speech={image}
-          tLeft={tLeft}
-          tBottom={tBottom}
-          textColor={textColor}
-          backgroundColor={backgroundColor}
-          tWidth={tWidth}
-          speechCount={speechCount}
-          value={i}
-          key={speechCount}
-        />
-      );
-    }
-    return elem;
-  });
-
-  i = 0;
-  const newScene = book[page].slice(1).map((image) => {
-    i += 1;
-    let elem;
-    let speechCount = 0;
-    if (image.character) {
-      elem = (
-        <Error>
-          <Character
-            scale={scale}
-            image={image}
-            value={i}
-            key={image.character}
-          />
-        </Error>
-      );
-    } else if (image.background) {
-      elem = (
-        <Background
-          scale={scale}
-          image={image}
-          value={i}
-          key={image.background}
-        />
-      );
-    } else if (image.item) {
-      elem = (
-        <Item
-          scale={scale}
-          image={image}
-          value={i}
-          key={image.item}
-        />
-      );
-    } else if (image.text) {
-      let tLeft;
-      let tBottom;
-      let tWidth;
-      const tar = image.target;
-      if (!tar) {
-        tLeft = image.tLeft;
-        tBottom = image.tBottom;
-        tWidth = 0;
-      } else {
-        const target = book[page].find((entry) => {
-          let temp;
-          if (entry.character) {
-            temp = entry.character.match(/([A-Z]?[^A-Z]*)/g)[0].split('-')[0] === tar;
-          } else { temp = false; }
-          return temp;
-        });
-        tLeft = target.left;
-        tBottom = target.bottom;
-        const pose = target.character.split('-')[0];
-        tWidth = characters[pose].width;
-      }
-
-      let textColor;
-      let backgroundColor;
-      if (!tar) {
-        textColor = standardBubbleColors.textColor;
-        backgroundColor = standardBubbleColors.backgroundColor;
-      } else {
-        textColor = characters[tar].textColor;
-        backgroundColor = characters[tar].backgroundColor;
-      }
-
-      speechCount += 1;
-      elem = (
-        <Speech
-          scale={scale}
-          speech={image}
-          tLeft={tLeft}
-          tBottom={tBottom}
-          textColor={textColor}
-          backgroundColor={backgroundColor}
-          tWidth={tWidth}
-          speechCount={speechCount}
-          value={i}
-          key={speechCount}
-        />
-      );
-    }
-    return elem;
-  });
-
-  const scene = permanentScene.concat(newScene);
+  const permanentList = book[0].filter((item) => page === 0 || (item.start <= page && item.end >= page));
+  const newList = book[page].slice(1);
+  const permanentScene = <Scene list={permanentList} scale={scale} book={book} page={page} />;
+  const newScene = <Scene list={newList} scale={scale} book={book} page={page} />;
 
   function handleResize() {
     const { clientWidth, clientHeight } = document.getElementById('viewer').parentElement;
@@ -225,7 +52,8 @@ export default function ViewerPage(props) {
           handleNext={handleNext}
           handleBack={handleBack}
         />
-        {scene}
+        {permanentScene}
+        {newScene}
       </BookContainer>
     </Container>
   );

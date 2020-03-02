@@ -44,7 +44,6 @@ export default function Template(props) {
       content = null;
   }
 
-
   return (
     <>
       {content}
