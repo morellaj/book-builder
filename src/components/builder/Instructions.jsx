@@ -13,6 +13,9 @@ export default function Instructions() {
       <Text>Drag an image (other than the background) to move it</Text>
       <Text>Right click an image to change some of the properties</Text>
       <Text>Any property can be changed using textarea below</Text>
+      <Heading>Note</Heading>
+      <Text>If there textarea format is not a valid json (probably trailing comma), it will error until it is fixed</Text>
+      <Text>Images will be layered based on their order in the json</Text>
     </Container>
   );
 }
@@ -20,7 +23,7 @@ export default function Instructions() {
 
 // Styling
 const Container = styled.div`
-  margin-top: 50px;
+  margin-top: 30px;
   padding: 5px;
   font-size: 14px;
 `;
